@@ -9,7 +9,7 @@ export default function Coupon(){
                 <div className="text-2xl py-3 pl-5 content-center">Coupon</div>
 
                 {/* Coupon List */}
-                <div className="flex overflow-x-auto w-[4000rem]">
+                <div className="flex overflow-x-auto">
                     {coupon.map((cat) => (
                         <div key={cat.name} className="bg-[#70E9BE] m-3 p-2 rounded min-w-max">
                             <div className="bg-gray-200 p-1 rounded">
