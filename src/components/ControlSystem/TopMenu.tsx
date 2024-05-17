@@ -35,7 +35,7 @@ export default async function TopMenu() {
                     width={0} height={0} sizes='25vh'/>
             </Link>                
 
-            <Link href="/" className="text-white font-semibold font-sans text-lg">
+            <Link href="/auth/login" className="text-white font-semibold font-sans text-lg">
                     Sign-in
             </Link>
 

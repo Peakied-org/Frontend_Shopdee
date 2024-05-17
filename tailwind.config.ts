@@ -18,6 +18,9 @@ const config: Config = {
         'custom-light-green':'70E9BE',
         'custom-bg':'F5F5F5',
       },
+      fontFamily: {
+        'inter': ['Inter', 'sans-serif'],
+      },
     },
   },
   plugins: [],
