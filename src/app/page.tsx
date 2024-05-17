@@ -1,8 +1,8 @@
 import React from 'react';
-import Category from '@/components/Category';
-import Coupon from '@/components/Coupon';
-import PromoBanner from '@/components/PromoBanner';
-import RecommendedProducts from '@/components/RecommendedProducts';
+import Category from '@/components/Home Page/Category';
+import Coupon from '@/components/Home Page/Coupon';
+import PromoBanner from '@/components/Home Page/PromoBanner';
+import RecommendedProducts from '@/components/Home Page/RecommendedProducts';
 
 export default function Home() {
   

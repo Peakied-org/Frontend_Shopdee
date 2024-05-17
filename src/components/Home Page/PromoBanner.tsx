@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, useEffect } from "react";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
-import './SlidingTransition.css';
+import '../ControlSystem/SlidingTransition.css';
 
 
 export default function PromoBanner(){
