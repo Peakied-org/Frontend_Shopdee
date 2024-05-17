@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import TopMenu from "@/components/ControlSystem/TopMenu";
+import Footer from "@/components/ControlSystem/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,6 +23,7 @@ export default function RootLayout({
       <body className={inter.className}>
         {showTopMenu && <TopMenu/>}
         {children}
+        <Footer/>
       </body>
     </html>
   );
