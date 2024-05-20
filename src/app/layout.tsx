@@ -13,15 +13,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-  showTopMenu = true,
 }: Readonly<{
   children: React.ReactNode;
-  showTopMenu?: boolean;
 }>) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        {showTopMenu && <TopMenu/>}
+        <TopMenu/>
         {children}
         <Footer/>
       </body>
