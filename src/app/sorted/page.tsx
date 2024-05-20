@@ -1,16 +1,16 @@
-// pages/sorted.tsx
 'use client';
 import { useSearchParams } from 'next/navigation';
+import SortFilter from '@/components/Sort Page/SortFilter';
+import SortedProducts from '@/components/Sort Page/SortedProduct';
 
 export default function SortedPage() {
     const searchParams = useSearchParams();
-    const query = searchParams.get('query');
+    let query = searchParams.get('query') || '';
 
     return (
-        <main className='mt-16'>
-            <div>
-                {query}
-            </div>
+        <main className="p-16">
+            <SortFilter value={query} />
+            <SortedProducts/>
         </main>
     );
 }

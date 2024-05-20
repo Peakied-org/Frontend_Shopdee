@@ -24,7 +24,7 @@ export default function TopMenu() {
 
                 <div className="ml-4 w-[50vw]">
                     <form onSubmit={handleSearch} className="flex items-center bg-white rounded-2xl shadow-lg w-full">
-                        <input type="text" id="searchInput" name="name" placeholder="Search"
+                        <input type="text" id="searchInput" name="query" placeholder="Search"
                             className="bg-white rounded-xl w-full p-2 text-gray-700 focus:outline-none" />
                         <button type="submit" className="mr-2">
                         <Image src='/img/searchIcon.png' alt='logo' style={{ height: '100%', width: 'auto' }} width={0} height={0} sizes='60vh' />
