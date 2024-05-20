@@ -13,7 +13,6 @@ export default function Home() {
       <Category></Category>
       <Coupon></Coupon>
       <RecommendedProducts></RecommendedProducts>
-      
     </main>
   );
 }

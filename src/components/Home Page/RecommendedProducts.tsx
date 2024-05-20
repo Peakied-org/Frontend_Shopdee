@@ -25,13 +25,13 @@ export default function RecommendedProducts() {
         {shuffledProducts.map((item, index) => (
           <Link key={index} href={item.name}>
             <div>
-              <img src={item.picture} alt={item.name} />
+              <img src={item.picture[0]} alt={item.name} />
               <div className='bg-white py-2 px-2'>
                 <div className='text-2xl'>{item.name}</div>
-                <div className='line-through text-sm pt-2 text-gray-400'>฿{item.oldprice}</div>
+                <div className='line-through text-sm pt-2 text-gray-400'>฿{item.cost}</div>                
                 <div className='flex flex-row justify-between'>
-                  <div className='text-2xl text-[#00BF7A]'>฿{item.oldprice}</div>
-                  <div className=''>ขายแล้ว {item.selled} ชิ้น</div>
+                  <div className='text-2xl text-[#00BF7A]'>฿{item.cost - item.discount}</div>
+                  <div className=''>ขายแล้ว {item.sold} ชิ้น</div>
                 </div>
               </div>
             </div>
