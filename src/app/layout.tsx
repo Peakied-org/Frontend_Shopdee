@@ -13,15 +13,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <TopMenu/>
-        {children}
-        <Footer/>
+      <body className={`${inter.className} flex flex-col min-h-screen`}>
+        <TopMenu />
+        <main className="flex-grow">{children}</main>
+        <Footer />
       </body>
     </html>
   );
