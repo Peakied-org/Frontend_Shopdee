@@ -35,7 +35,7 @@ export default function SortFilter({
 
     return (
         <div className="bg-white p-10">
-            <p className="text-center text-3xl text-custom-green">From Search "{value}"</p>
+            <p className="text-center text-3xl text-custom-green font-inter">From Search "{value}"</p>
             <p className="flex justify-between p-4 text-xl">
                 Sort by:
                 <select value={localSortPrice} onChange={handleSortPriceChange} className="w-[40%] rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 bg-slate-200">

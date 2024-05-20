@@ -1,13 +1,18 @@
 import Link from 'next/link';
 import { products } from '@/products';
 
-export default function SortedProducts({ sortPrice, sortChar, minPrice, maxPrice }: {
+export default function SortedProducts({ sortPrice, sortChar, minPrice, maxPrice, value }: {
     sortPrice: string,
     sortChar: string,
     minPrice: string,
-    maxPrice: string
+    maxPrice: string,
+    value: string,
 }) {
     let sortedProducts = [...products];
+
+    if (value) {
+        sortedProducts = sortedProducts.filter(product => product.name.toLowerCase().includes(value.toLowerCase()));
+    }
 
     if (minPrice) {
         sortedProducts = sortedProducts.filter(product => product.cost - product.discount >= parseFloat(minPrice));

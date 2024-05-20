@@ -27,6 +27,7 @@ export default function SortedPage() {
                 onConfirm={handleConfirm}
             />
             <SortedProducts
+                value={query}
                 sortPrice={sortPrice}
                 sortChar={sortChar}
                 minPrice={minPrice}
