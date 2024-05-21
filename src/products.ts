@@ -1,5 +1,8 @@
-export const products = [
+import { Product } from "./interfaces";
+
+export const products: Product[] = [
   {
+    id:1,
     name: "Pen",
     picture: ["/img/item/1/1.png", "/img/item/1/2.png", "/img/item/1/3.png", "/img/item/1/4.png"],
     cost: 200,
@@ -8,14 +11,16 @@ export const products = [
     category: "Writing Instruments",
     stock: 10,
     sold: 5,
+    choice:["red", "blue", "green", "yellow", "orange", "purple", "white"],
     storeId: {
       name: "store1",
       detail: "This store is very good",
-      image: "/img/item/1/profile",
+      image: "/img/item/1/profile.png",
       banner: "banner",
     }
   },
   {
+    id:2,
     name: "Notebook",
     picture: ["/img/item/2/1.png", "/img/item/2/2.png", "/img/item/2/3.png", "/img/item/2/4.png"],
     cost: 500,
@@ -24,14 +29,16 @@ export const products = [
     category: "Paper Products",
     stock: 10,
     sold: 5,
+    choice:["red", "blue", "green", "yellow", "orange", "purple", "white"],
     storeId: {
       name: "store2",
       detail: "This store offers a wide range of paper products.",
-      image: "/img/item/2/profile",
+      image: "/img/item/2/profile.png",
       banner: "banner2",
     }
   },
   {
+    id:3,
     name: "Eraser",
     picture: ["/img/item/3/1.png", "/img/item/3/2.png", "/img/item/3/3.png", "/img/item/3/4.png"],
     cost: 50,
@@ -40,14 +47,16 @@ export const products = [
     category: "Writing Instruments",
     stock: 10,
     sold: 5,
+    choice:["red", "blue", "green", "yellow", "orange", "purple", "white"],
     storeId: {
       name: "store3",
       detail: "This store specializes in writing instruments.",
-      image: "/img/item/3/profile",
+      image: "/img/item/3/profile.png",
       banner: "banner3",
     }
   },
   {
+    id:4,
     name: "Pencil",
     picture: ["/img/item/4/1.png", "/img/item/4/2.png", "/img/item/4/3.png", "/img/item/4/4.png"],
     cost: 100,
@@ -56,14 +65,16 @@ export const products = [
     category: "Writing Instruments",
     stock: 10,
     sold: 5,
+    choice:["red", "blue", "green", "yellow", "orange", "purple", "white"],
     storeId: {
       name: "store3",
       detail: "This store specializes in writing instruments.",
-      image: "/img/item/3/profile",
+      image: "/img/item/3/profile.png",
       banner: "banner3",
     }
   },
   {
+    id:5,
     name: "Ruler",
     picture: ["/img/item/5/1.png", "/img/item/5/2.png", "/img/item/5/3.png", "/img/item/5/4.png"],
     cost: 80,
@@ -72,14 +83,16 @@ export const products = [
     category: "Drafting Tools",
     stock: 10,
     sold: 5,
+    choice:["red", "blue", "green", "yellow", "orange", "purple", "white"],
     storeId: {
       name: "store4",
       detail: "This store offers a variety of drafting tools.",
-      image: "/img/item/4/profile",
+      image: "/img/item/4/profile.png",
       banner: "banner4",
     }
   },
   {
+    id:6,
     name: "Marker",
     picture: ["/img/item/6/1.png", "/img/item/6/2.png", "/img/item/6/3.png", "/img/item/6/4.png"],
     cost: 110,
@@ -88,14 +101,16 @@ export const products = [
     category: "Writing Instruments",
     stock: 10,
     sold: 5,
+    choice:["red", "blue", "green", "yellow", "orange", "purple", "white"],
     storeId: {
       name: "store3",
       detail: "This store specializes in writing instruments.",
-      image: "/img/item/3/profile",
+      image: "/img/item/3/profile.png",
       banner: "banner3",
     }
   },
   {
+    id:7,
     name: "Glue Stick",
     picture: ["/img/item/7/1.png", "/img/item/7/2.png", "/img/item/7/3.png", "/img/item/7/4.png"],
     cost: 90,
@@ -104,14 +119,16 @@ export const products = [
     category: "Adhesives",
     stock: 10,
     sold: 5,
+    choice:["red", "blue", "green", "yellow", "orange", "purple", "white"],
     storeId: {
       name: "store5",
       detail: "This store offers a wide range of adhesives and craft supplies.",
-      image: "/img/item/5/profile",
+      image: "/img/item/5/profile.png",
       banner: "banner5",
     }
   },
   {
+    id:8,
     name: "Scissors",
     picture: ["/img/item/8/1.png", "/img/item/8/2.png", "/img/item/8/3.png", "/img/item/8/4.png"],
     cost: 250,
@@ -120,14 +137,16 @@ export const products = [
     category: "Cutting Tools",
     stock: 10,
     sold: 5,
+    choice:["red", "blue", "green", "yellow", "orange", "purple", "white"],
     storeId: {
       name: "store6",
       detail: "This store specializes in cutting tools and blades.",
-      image: "/img/item/6/profile",
+      image: "/img/item/6/profile.png",
       banner: "banner6",
     }
   },
   {
+    id:9,
     name: "Stapler",
     picture: ["/img/item/9/1.png", "/img/item/9/2.png", "/img/item/9/3.png", "/img/item/9/4.png"],
     cost: 300,
@@ -136,14 +155,16 @@ export const products = [
     category: "Office Supplies",
     stock: 10,
     sold: 5,
+    choice:["red", "blue", "green", "yellow", "orange", "purple", "white"],
     storeId: {
       name: "store7",
       detail: "This store offers a wide range of office supplies.",
-      image: "/img/item/7/profile",
+      image: "/img/item/7/profile.png",
       banner: "banner7",
     }
   },
   {
+    id:10,
     name: "Highlighter",
     picture: ["/img/item/10/1.png", "/img/item/10/2.png", "/img/item/10/3.png", "/img/item/10/4.png"],
     cost: 120,
@@ -152,14 +173,16 @@ export const products = [
     category: "Writing Instruments",
     stock: 10,
     sold: 5,
+    choice:["red", "blue", "green", "yellow", "orange", "purple", "white"],
     storeId: {
       name: "store3",
       detail: "This store specializes in writing instruments.",
-      image: "/img/item/3/profile",
+      image: "/img/item/3/profile.png",
       banner: "banner3",
     }
   },
   {
+    id:11,
     name: "Paper Clips",
     picture: ["/img/item/11/1.png", "/img/item/11/2.png", "/img/item/11/3.png", "/img/item/11/4.png"],
     cost: 30,
@@ -168,14 +191,16 @@ export const products = [
     category: "Office Supplies",
     stock: 10,
     sold: 5,
+    choice:["red", "blue", "green", "yellow", "orange", "purple", "white"],
     storeId: {
       name: "store7",
       detail: "This store offers a wide range of office supplies.",
-      image: "/img/item/7/profile",
+      image: "/img/item/7/profile.png",
       banner: "banner7",
     }
   },
   {
+    id:12,
     name: "Binder",
     picture: ["/img/item/12/1.png","/img/item/12/2.png","/img/item/12/3.png","/img/item/12/4.png"],
     cost: 400,
@@ -184,14 +209,16 @@ export const products = [
     category: "Paper Products",
     stock: 10,
     sold: 5,
+    choice:["red", "blue", "green", "yellow", "orange", "purple", "white"],
     storeId: {
       name: "store7",
       detail: "This store offers a wide range of office supplies.",
-      image: "/img/item/7/profile",
+      image: "/img/item/7/profile.png",
       banner: "banner7",
     }
   },
   {
+    id:13,
     name: "Calculator",
     picture: ["/img/item/13/1.png","/img/item/13/2.png","/img/item/13/3.png","/img/item/13/4.png"],
     cost: 800,
@@ -200,14 +227,16 @@ export const products = [
     category: "Office Supplies",
     stock: 10,
     sold: 5,
+    choice:["red", "blue", "green", "yellow", "orange", "purple", "white"],
     storeId: {
       name: "store7",
       detail: "This store offers a wide range of office supplies.",
-      image: "/img/item/7/profile",
+      image: "/img/item/7/profile.png",
       banner: "banner7",
     }
   },
   {
+    id:14,
     name: "Backpack",
     picture: ["/img/item/14/1.png","/img/item/14/2.png","/img/item/14/3.png","/img/item/14/4.png"],
     cost: 600,
@@ -216,14 +245,16 @@ export const products = [
     category: "Bags",
     stock: 10,
     sold: 5,
+    choice:["red", "blue", "green", "yellow", "orange", "purple", "white"],
     storeId: {
       name: "store7",
       detail: "This store offers a wide range of office supplies.",
-      image: "/img/item/7/profile",
+      image: "/img/item/7/profile.png",
       banner: "banner7",
     }
   },
   {
+    id:15,
     name: "Whiteboard",
     picture: ["/img/item/15/1.png","/img/item/15/2.png","/img/item/15/3.png","/img/item/15/4.png"],
     cost: 1200,
@@ -232,10 +263,11 @@ export const products = [
     category: "Writing Surfaces",
     stock: 10,
     sold: 5,
+    choice:["red", "blue", "green", "yellow", "orange", "purple", "white"],
     storeId: {
       name: "store7",
       detail: "This store offers a wide range of office supplies.",
-      image: "/img/item/7/profile",
+      image: "/img/item/7/profile.png",
       banner: "banner7",
     }
   }
