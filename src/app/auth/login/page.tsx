@@ -1,4 +1,5 @@
 'use client'
+import Link from "next/link";
 import { useState } from "react";
 
 export default function Login(){
@@ -7,7 +8,10 @@ export default function Login(){
     return(
         <main>
             <div className={"fixed top-0 left-0 right-0 bg-white h-24 z-30 flex flex-row items-center justify-between"}>
-                <img className="w-fit h-[80%] object-cover ml-16" src="/img/logoReverse.png" alt="logo"/>
+                <Link href={'/'}>
+                    <img className="w-fit h-[80%] object-cover ml-16" src="/img/logoReverse.png" alt="logo"/>
+                </Link>
+                
                 <p className="font-mono text-emerald-500 mr-16 text-3xl font-bold uppercase">login</p>
             </div>
             <div className="fixed top-0 left-0 right-0 bottom-0 bg-custom-green flex">
