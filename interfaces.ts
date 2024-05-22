@@ -25,3 +25,11 @@ type CartDetail = {
     storeID: number;
     quantity: number;
 };
+
+type Coupon = {
+    id: number;
+    name: string;
+    discount: string;
+    start_date: string;
+    expiry_date: string;
+};
