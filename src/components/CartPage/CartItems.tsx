@@ -1,11 +1,32 @@
-'use client'
-import { useState } from 'react';
+'use client';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { cartitem } from '@/cartItem';
-import { coupon } from '@/mockCoupon'
+import { coupon } from '@/mockCoupon';
+
+type Coupon = {
+    id: number;
+    name: string;
+    discount: string;
+    start_date: string;
+    expiry_date: string;
+};
 
 export default function CartItems() {
     const [items, setItems] = useState(cartitem);
     const [selectedCoupon, setSelectedCoupon] = useState<Coupon | null>(null);
+    const [totalPrice, setTotalPrice] = useState(0);
+    const router = useRouter();
+
+    useEffect(() => {
+        calculateTotal();
+    }, [items, selectedCoupon]);
+
+    const calculateTotal = () => {
+        const itemTotal = items.reduce((sum, item) => sum + (item.cost - item.discount) * item.quantity, 0);
+        const discount = selectedCoupon ? (itemTotal * parseInt(selectedCoupon.discount) / 100) : 0;
+        setTotalPrice(itemTotal - discount);
+    };
 
     const plusQuantity = (id: number) => {
         setItems(items.map(item =>
@@ -23,37 +44,31 @@ export default function CartItems() {
         setItems(items.filter(item => item.id !== id));
     };
 
-    const totalPrice = () => {
-        let price = 0;
-        items.map(item =>
-            price += item.quantity * (item.cost - item.discount)
-        );
-        return price;
-    }
-
     const handleCouponChange = (event: any) => {
         const couponId = parseInt(event.target.value);
         const selected = coupon.find(c => c.id === couponId) || null;
         setSelectedCoupon(selected);
     };
 
-
-    function handleOrderClick(event: any){
-        alert('hello world!')
-    }
+    const handleOrder = () => {
+        router.push(`/payment?price=${totalPrice}`);
+    };
 
     return (
-        <main>
+        <div className=''>
+            {/* Header Bar */}
             <div className="bg-white p-4 mb-4">
                 <div className="grid grid-cols-6 gap-4 items-center font-semibold">
-                    <div className="col-span-2 text-center text-lg">Product</div>
-                    <div className='text-lg'>Price</div>
-                    <div className='text-lg'>Quantity</div>
-                    <div className='text-lg'>Total Price</div>
+                    <div className="col-span-2 text-center">Product</div>
+                    <div>Price</div>
+                    <div>Quantity</div>
+                    <div>Total Price</div>
+                    <div></div>
                 </div>
             </div>
 
-            <div className="bg-white p-4 mb-4">            
+            {/* Cart Items */}
+            <div className="bg-white p-4">            
             {items.map(item => (
                 <div key={item.id} className="grid grid-cols-6 gap-4 items-center border-b py-4">
                     {/* Image */}
@@ -93,10 +108,14 @@ export default function CartItems() {
             ))}
             </div>
 
+            {/* Coupon and Total Price Section */}
             <div className="bg-white p-4 mt-4 grid grid-cols-4 gap-4 items-center">
+                {/* Select Coupon Message */}
                 <div className="text-center text-2xl">Select Coupon</div>
+                
+                {/* Coupon Selection */}
                 <div className="flex justify-center">
-                    <select id="coupon" onChange={handleCouponChange} className="border p-2 w-[100%] bg-slate-100">
+                    <select id="coupon" onChange={handleCouponChange} className="border p-2">
                         <option value="">No Coupon</option>
                         {coupon.map(c => (
                             <option key={c.id} value={c.id}>
@@ -105,12 +124,16 @@ export default function CartItems() {
                         ))}
                     </select>
                 </div>
-                <div className="text-center text-2xl font-semibold">Total Price</div>
+                
+                {/* Total Price Message */}
+                <div className="text-center text-2xl">Total Price</div>
+                
+                {/* Total Price and Order Button */}
                 <div className="flex flex-col items-center">
-                    <span className="text-green-600 text-2xl font-semibold">{totalPrice()} ฿</span>
-                    <button className="bg-green-500 text-white px-4 py-2 mt-2 rounded-sm" onClick={handleOrderClick}>Order</button>
+                    <span className="text-green-600 text-lg">{totalPrice} ฿</span>
+                    <button onClick={handleOrder} className="bg-green-500 text-white px-4 py-2 mt-2">Order</button>
                 </div>
             </div>
-        </main>
+        </div>
     );
 }
