@@ -1,4 +1,5 @@
-
+import CartItems from "@/components/CartPage/CartItems"
+import RecommendedProducts from "@/components/HomePage/RecommendedProducts"
 
 
 export default function Cart() {
@@ -6,7 +7,8 @@ export default function Cart() {
 
     return (
         <main className="p-16">
-            <h1>Hello Cart!</h1>
+            <CartItems/>
+            <RecommendedProducts/>
         </main>
     )
 }
