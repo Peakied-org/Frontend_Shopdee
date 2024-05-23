@@ -6,6 +6,8 @@ import { Toaster, toast } from 'react-hot-toast';
 export default function ProductBox({ pid }: { pid: number }) {
   const product = products.find(product => product.id === Number(pid));
 
+  console.log(product)
+
   let discountedCost: number | undefined;
   if (product) {
     discountedCost = product.cost - (product.cost * product.discount) / 100;

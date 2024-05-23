@@ -1,5 +1,6 @@
 "use client"
 import { products } from '@/products';
+import Link from 'next/link';
 
 export default function ViewStore({ pid }: { pid: number }) {
     const product = products.find(product => product.id === Number(pid));
@@ -10,7 +11,9 @@ export default function ViewStore({ pid }: { pid: number }) {
                 <img className='brightness-50 max-h-20' src={product?.storeId.image} alt={product?.storeId.name} />
                 <div className='text-2xl font-semibold place-content-center pl-6'>{product?.storeId.name}</div> 
             </div>
-            <button className='bg-[#00BF7A] px-12 my-3 rounded text-white font-bold text-2xl'>View</button>
+            <Link key={product?.id} href={`/store/${product?.storeId.id}`}>
+                <button className='bg-[#00BF7A] px-12 my-3 rounded text-white font-bold text-2xl'>View</button>
+            </Link>
         </div>
     )
 }
