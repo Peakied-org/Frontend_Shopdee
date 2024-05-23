@@ -13,6 +13,7 @@ export const products: Product[] = [
     sold: 5,
     choice:["red", "blue", "green", "yellow", "orange", "purple", "white"],
     storeId: {
+      id:1,
       name: "store1",
       detail: "This store is very good",
       image: "/img/item/1/profile.png",
@@ -31,6 +32,7 @@ export const products: Product[] = [
     sold: 5,
     choice:["red", "blue", "green", "yellow", "orange", "purple", "white"],
     storeId: {
+      id:2,
       name: "store2",
       detail: "This store offers a wide range of paper products.",
       image: "/img/item/2/profile.png",
@@ -49,6 +51,7 @@ export const products: Product[] = [
     sold: 5,
     choice:["red", "blue", "green", "yellow", "orange", "purple", "white"],
     storeId: {
+      id:3,
       name: "store3",
       detail: "This store specializes in writing instruments.",
       image: "/img/item/3/profile.png",
@@ -67,6 +70,7 @@ export const products: Product[] = [
     sold: 5,
     choice:["red", "blue", "green", "yellow", "orange", "purple", "white"],
     storeId: {
+      id:3,
       name: "store3",
       detail: "This store specializes in writing instruments.",
       image: "/img/item/3/profile.png",
@@ -85,6 +89,7 @@ export const products: Product[] = [
     sold: 5,
     choice:["red", "blue", "green", "yellow", "orange", "purple", "white"],
     storeId: {
+      id:4,
       name: "store4",
       detail: "This store offers a variety of drafting tools.",
       image: "/img/item/4/profile.png",
@@ -103,6 +108,7 @@ export const products: Product[] = [
     sold: 5,
     choice:["red", "blue", "green", "yellow", "orange", "purple", "white"],
     storeId: {
+      id:3,
       name: "store3",
       detail: "This store specializes in writing instruments.",
       image: "/img/item/3/profile.png",
@@ -121,6 +127,7 @@ export const products: Product[] = [
     sold: 5,
     choice:["red", "blue", "green", "yellow", "orange", "purple", "white"],
     storeId: {
+      id:5,
       name: "store5",
       detail: "This store offers a wide range of adhesives and craft supplies.",
       image: "/img/item/5/profile.png",
@@ -139,6 +146,7 @@ export const products: Product[] = [
     sold: 5,
     choice:["red", "blue", "green", "yellow", "orange", "purple", "white"],
     storeId: {
+      id:6,
       name: "store6",
       detail: "This store specializes in cutting tools and blades.",
       image: "/img/item/6/profile.png",
@@ -157,6 +165,7 @@ export const products: Product[] = [
     sold: 5,
     choice:["red", "blue", "green", "yellow", "orange", "purple", "white"],
     storeId: {
+      id:7,
       name: "store7",
       detail: "This store offers a wide range of office supplies.",
       image: "/img/item/7/profile.png",
@@ -175,6 +184,7 @@ export const products: Product[] = [
     sold: 5,
     choice:["red", "blue", "green", "yellow", "orange", "purple", "white"],
     storeId: {
+      id:3,
       name: "store3",
       detail: "This store specializes in writing instruments.",
       image: "/img/item/3/profile.png",
@@ -193,6 +203,7 @@ export const products: Product[] = [
     sold: 5,
     choice:["red", "blue", "green", "yellow", "orange", "purple", "white"],
     storeId: {
+      id:7,
       name: "store7",
       detail: "This store offers a wide range of office supplies.",
       image: "/img/item/7/profile.png",
@@ -211,6 +222,7 @@ export const products: Product[] = [
     sold: 5,
     choice:["red", "blue", "green", "yellow", "orange", "purple", "white"],
     storeId: {
+      id:7,
       name: "store7",
       detail: "This store offers a wide range of office supplies.",
       image: "/img/item/7/profile.png",
@@ -229,6 +241,7 @@ export const products: Product[] = [
     sold: 5,
     choice:["red", "blue", "green", "yellow", "orange", "purple", "white"],
     storeId: {
+      id:7,
       name: "store7",
       detail: "This store offers a wide range of office supplies.",
       image: "/img/item/7/profile.png",
@@ -247,6 +260,7 @@ export const products: Product[] = [
     sold: 5,
     choice:["red", "blue", "green", "yellow", "orange", "purple", "white"],
     storeId: {
+      id:7,
       name: "store7",
       detail: "This store offers a wide range of office supplies.",
       image: "/img/item/7/profile.png",
@@ -265,6 +279,7 @@ export const products: Product[] = [
     sold: 5,
     choice:["red", "blue", "green", "yellow", "orange", "purple", "white"],
     storeId: {
+      id:7,
       name: "store7",
       detail: "This store offers a wide range of office supplies.",
       image: "/img/item/7/profile.png",

@@ -1,12 +1,13 @@
 // interfaces.ts
 export interface Store {
+    id: number;
     name: string;
     detail: string;
     image: string;
     banner: string;
   }
   
-  export interface Product {
+export interface Product {
     id: number;
     name: string;
     picture: string[];
