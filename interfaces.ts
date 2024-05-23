@@ -33,3 +33,11 @@ type Coupon = {
     start_date: string;
     expiry_date: string;
 };
+
+type Order = {
+    orderId: number;
+    items: CartDetail[];
+    totalPrice: number;
+    orderDate: string;
+    status: string;
+}

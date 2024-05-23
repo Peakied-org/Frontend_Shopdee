@@ -4,14 +4,6 @@ import { useRouter } from 'next/navigation';
 import { cartitem } from '@/cartItem';
 import { coupon } from '@/mockCoupon';
 
-type Coupon = {
-    id: number;
-    name: string;
-    discount: string;
-    start_date: string;
-    expiry_date: string;
-};
-
 export default function CartItems() {
     const [items, setItems] = useState(cartitem);
     const [selectedCoupon, setSelectedCoupon] = useState<Coupon | null>(null);
