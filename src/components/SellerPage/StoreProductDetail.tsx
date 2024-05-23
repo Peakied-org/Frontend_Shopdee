@@ -27,9 +27,11 @@ export default function StoreProductDetail({ sid }: { sid: number }) {
                                 <div className="text-3xl ">{item.stock}</div>
                             </div>
                             <div className="absolute right-4 top-4 bottom-4 flex flex-col justify-between items-end">
-                                <FaPencilAlt color="gray" size={32} />
+                                <Link href={`/store/${store?.id}/editItem/`} passHref>
+                                    <FaPencilAlt color="gray" size={36} />
+                                </Link>
                                 <button className="bg-[#00BF7A] px-12 py-3 rounded text-white font-semibold text-2xl my-4 mr-10">View</button>
-                                <RiDeleteBin6Fill color="red" size={32} />
+                                <RiDeleteBin6Fill color="red" size={36} />
                             </div>
                         </div>
                     ) : null
