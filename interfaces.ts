@@ -1,10 +1,24 @@
 type Product = {
+    id: number;
     name: string;
+    picture: string[];
     cost: number;
     discount: number;
-    picture: string[];
+    description: string;
+    category: string;
+    stock: number;
     sold: number;
+    choice: string[];
+    storeId: Store;
 };
+
+type Store = {
+    id: number;
+    name: string;
+    detail: string;
+    image: string;
+    banner: string;
+}
 
 type SortedProductsProps = {
     sortPrice: string;

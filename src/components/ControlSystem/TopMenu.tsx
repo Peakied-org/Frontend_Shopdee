@@ -1,8 +1,8 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 export default function TopMenu() {
     const [showMenu, setShowMenu] = useState(false);
@@ -39,8 +39,8 @@ export default function TopMenu() {
                         width={0} height={0} sizes='25vh' />
                 </Link>
 
-                <button onClick={() => setShowMenu(!showMenu)}>
-                    <Image src='/img/profileIcon.png' alt='profile' width={30} height={30} />
+                <button onClick={() => setShowMenu(!showMenu)} className='h-[35%]'>
+                    <Image src='/img/profileIcon.png' alt='profile' width={0} height={0} style={{ height: '100%', width: 'auto' }} />
                 </button>
                 {showMenu && (
                     <div className="absolute right-0 mt-24 w-48 bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg">
