@@ -51,6 +51,21 @@ export default function TopMenu() {
             </div>
 
             <div className='flex flex-row absolute items-center right-10 h-full space-x-16'>
+                {
+                    user? 
+                        user.body.role === "SELLER" ? 
+
+                        <Link href="/store">
+                            <Image src='/img/sellerIcon.png' alt='store' style={{ height: '30%', width: 'auto' }}
+                                width={0} height={0} sizes='25vh' />
+                        </Link> : user.body.role === "ADMIN" ? 
+
+                            <Link href="/store">
+                                <Image src='/img/adminIcon.png' alt='cart' style={{ height: '30%', width: 'auto' }}
+                                    width={0} height={0} sizes='25vh' />
+                            </Link> : ""
+                    : ""
+                }
                 <Link href="/cart">
                     <Image src='/img/cart.png' alt='cart' style={{ height: '30%', width: 'auto' }}
                         width={0} height={0} sizes='25vh' />
