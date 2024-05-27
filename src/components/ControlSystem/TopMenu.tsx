@@ -1,15 +1,30 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
+import getUserProfile from '@/lib/getUserProfile';
 
 export default function TopMenu() {
     const [showMenu, setShowMenu] = useState(false);
     const router = useRouter();
-    const {data:session} = useSession();
 
+    const [user, setUser] = useState(null);
+    const {data:session} = useSession();
+    //console.log(session)
+    if(session){
+    useEffect(() => {
+        const fetchData = async () => {
+          const profile = await getUserProfile(session?.user.body.token);
+          if (profile) {
+            setUser(profile);
+          }
+        };
+        fetchData();
+        }, []);
+    }
+    
     const handleSearch = (event: any) => {
         event.preventDefault();
         const searchQuery = event.target.elements.searchInput.value;
@@ -55,7 +70,7 @@ export default function TopMenu() {
                         </Link>
                         {
                             session?  <Link href="/api/auth/signout">
-                            <p className="w-full px-4 py-2 text-left" onClick={() => setShowMenu(false)}>Log-out {session.user.name}</p>
+                            <p className="w-full px-4 py-2 text-left" onClick={() => setShowMenu(false)}>Log-out {user.body.name}</p>
                         </Link> 
                             : 
                             <Link href="/auth/login">
