@@ -2,7 +2,7 @@ export const category = [
     {
       id:1,
       name: "Men's Shirt",
-      picture: "/img/category/1.png",
+      picture: "https://drive.google.com/uc?id=1u9L1VM3qac1Kp4I1-NP9uYbZg0oIzpof",
     },
     {
       id:2,
