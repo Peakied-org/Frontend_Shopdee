@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import register from "@/lib/userRegister";
 
-export default function Register() {
+export default async function Register() {
     const [isSeller, setIsSeller] = useState(false);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -13,12 +13,14 @@ export default function Register() {
     const [cardNumber, setCardNumber] = useState("");
     const router = useRouter();
 
+
     const handleRegister = async (event: any) => {
         event.preventDefault();
         try {
             await register(username, telephone, address, password, isSeller ? cardNumber : null);
             router.push('/');
         } catch (error) {
+            alert('error!')
             console.error("Failed to register:", error);
         }
     };

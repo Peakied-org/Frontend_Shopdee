@@ -1,12 +1,14 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 
 export default function TopMenu() {
     const [showMenu, setShowMenu] = useState(false);
     const router = useRouter();
+    const {data:session} = useSession();
 
     const handleSearch = (event: any) => {
         event.preventDefault();
@@ -39,8 +41,8 @@ export default function TopMenu() {
                         width={0} height={0} sizes='25vh' />
                 </Link>
 
-                <button onClick={() => setShowMenu(!showMenu)} className='h-[35%]'>
-                    <Image src='/img/profileIcon.png' alt='profile' width={0} height={0} style={{ height: '100%', width: 'auto' }} />
+                <button onClick={() => setShowMenu(!showMenu)}>
+                    <Image src='/img/profileIcon.png' alt='profile' width={30} height={30} />
                 </button>
                 {showMenu && (
                     <div className="absolute right-0 mt-24 w-48 bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg">
@@ -51,9 +53,16 @@ export default function TopMenu() {
                         <Link href="/orders">
                             <p className="w-full px-4 py-2 text-left" onClick={() => setShowMenu(false)}>Order History</p>
                         </Link>
-                        <Link href="/auth/login">
+                        {
+                            session?  <Link href="/api/auth/signout">
+                            <p className="w-full px-4 py-2 text-left" onClick={() => setShowMenu(false)}>Log-out {session.user.name}</p>
+                        </Link> 
+                            : 
+                            <Link href="/auth/login">
                             <p className="w-full px-4 py-2 text-left" onClick={() => setShowMenu(false)}>Log-in</p>
                         </Link>
+                        }
+                        
                     </div>
                 )}
             </div>

@@ -3,7 +3,6 @@ import Link from "next/link";
 import { useState } from "react";
 import { redirect, useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
-import { callbackify } from "util";
 
 export default function Login() {
     const [username, setUsername] = useState("");
