@@ -1,28 +1,56 @@
-"use client"
-import { useState } from 'react';
-import { products } from '@/products';
+"use client";
+import { useState, useEffect } from 'react';
 import { Toaster, toast } from 'react-hot-toast';
+import getItem from '@/lib/getItem';
+import { useAppDispatch } from '@/redux/store';
+import { addToCart } from '@/redux/features/cartSlice';
+import convertImgUrl from '../ControlSystem/convertImgUrl';
+import Image from 'next/image';
 
 export default function ProductBox({ pid }: { pid: number }) {
-  const product = products.find(product => product.id === Number(pid));
+  const [product, setProduct] = useState<Product | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [imgNum, setImgNum] = useState(0);
+  const [count, setCount] = useState(1);
+  const [activeChoice, setActiveChoice] = useState<number | null>(null);
+  const [activeImage, setActiveImage] = useState<number | null>(0);
+  const dispatch = useAppDispatch();
 
-  console.log(product)
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const data = await getItem(pid);
+        setProduct(data.body);
+      } catch (error) {
+        console.error('Error fetching product:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProduct();
+  }, [pid]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (product == null) {
+    return <div className='mt-12 p-4'>No product found</div>;
+  }
+
+  console.log(product);
 
   let discountedCost: number | undefined;
   if (product) {
     discountedCost = product.cost - (product.cost * product.discount) / 100;
   }
 
-  const [imgNum, setImgNum] = useState(0);
-  const [count, setCount] = useState(1);
-  const [activeChoice, setActiveChoice] = useState<number | null>(null);
-  const [activeImage, setActiveImage] = useState<number | null>(0);
-
   const decrementCount = () => {
     if (count > 1) {
       setCount(count - 1);
     } else {
-      return toast.error("Item can't be less than 1");
+      toast.error("Item can't be less than 1");
     }
   };
 
@@ -30,71 +58,74 @@ export default function ProductBox({ pid }: { pid: number }) {
     if (product && count < product.stock) {
       setCount(count + 1);
     } else {
-      return toast.error("Item can't be more than stock");
+      toast.error("Item can't be more than stock");
+    }
+  };
+
+  const handleAddToCart = () => {
+    if (product) {
+      dispatch(addToCart({
+        id: product.id,
+        name: product.name,
+        cost: product.cost,
+        discount: product.discount,
+        quantity: count,
+        picture: product.images[0]
+      }));
+      toast.success("Item added to cart");
     }
   };
 
   return (
-    <div className='mt-10 mx-5 bg-white max-h-fit'>
+    <div className="mt-10 mx-5 bg-white max-h-fit">
       <div className="grid grid-cols-2 gap-10">
         {/* Image */}
         <div>
           {/* Main Picture */}
-          <div className='pt-10 pl-10 pb-5'>
-            <img src={product?.picture[imgNum]} alt={product?.name} className='max-w-[40rem]' />
+          <div className="pt-10 pl-10 pb-5">
+            <Image src={convertImgUrl(product.images[imgNum])} alt={product.name} width={0} height={0} className="max-w-[40rem] h-auto w-[30vw]" />
           </div>
           {/* Optional Picture */}
-          <div className='flex flex-row pl-10 pb-10'>
-            {product?.picture.map((img, index) => (
-              <img
+          <div className="flex flex-row pl-10 pb-10">
+            {product.images.map((pic, index) => (
+              <Image
                 key={index}
-                src={img}
-                alt={product?.name}
-                className={`max-w-[10rem] cursor-pointer border-2 ${
-                  activeImage === index ? 'brightness-75' : 'brightness-100'
-                }`}
-                onClick={() => {
-                  setImgNum(index);
-                  setActiveImage(index);
-                }}
+                src={convertImgUrl(pic)}
+                alt={pic}
+                width={0} height={0}
+                className={`max-w-[10rem] cursor-pointer w-[8vw] h-auto ${activeImage === index ? 'border-4 border-black' : ''}`}
+                onClick={() => {setActiveImage(index); setImgNum(index)}}
               />
             ))}
           </div>
         </div>
-
-        {/* Product Detail */}
-        <div className='pt-14 pr-10'>
-          {/* Name */}
-          <div className='text-5xl pb-2'>{product?.name}</div>
-          {/* Sold */}
-          <div className='pb-2 text-2xl pl-5'>ขายแล้ว {product?.sold} ชิ้น</div>
-          {/* Cost */}
-          <div className="flex flex-row bg-gray-200 max-h-fit py-5">
-            <div className='text-xl line-through text-gray-500 pl-4 place-content-center'>฿{product?.cost}</div>
-            <div className='text-5xl place-content-center pl-5 pr-7 tracking-wider text-[#00BF7A] font-bold'>฿{discountedCost}</div>
-            <div className='text-2xl text-white font-bold place-content-center px-3 py-2 bg-[#00BF7A]'>{product?.discount}% Sale!</div>
-          </div>
+        {/* Product Info */}
+        <div className="pt-10">
+          {/* Product Name */}
+          <div className="text-3xl font-semibold">{product.name}</div>
+          {/* Product Price */}
+          <div className="text-2xl pt-5">{discountedCost} ฿</div>
+          {/* Discount */}
+          <div className="text-xl pt-2 text-red-500">{product.discount}% Sale!</div>
           {/* Count */}
-          <div className='flex flex-row pt-7 items-center'>
-            <div className='pr-3 text-xl'>จำนวน</div>
-            <div className='flex flex-row items-center bg-gray-200 place-content-center'>
-              <button className='px-3 cursor-pointer text-2xl border border-black' onClick={decrementCount}>-</button>
-              <div className='px-12 text-2xl border border-black'>{count}</div>
-              <button className='px-3 cursor-pointer text-2xl border border-black' onClick={incrementCount}>+</button>
+          <div className="flex flex-row pt-7 items-center">
+            <div className="pr-3 text-xl">จำนวน</div>
+            <div className="flex flex-row items-center bg-gray-200 place-content-center">
+              <button className="px-3 cursor-pointer text-2xl border border-black" onClick={decrementCount}>-</button>
+              <div className="px-12 text-2xl border border-black">{count}</div>
+              <button className="px-3 cursor-pointer text-2xl border border-black" onClick={incrementCount}>+</button>
             </div>
-            <div className='text-xl pl-3'>มีสินค้าทั้งหมด {product?.stock} ชิ้น</div>
+            <div className="text-xl pl-3">มีสินค้าทั้งหมด {product.stock} ชิ้น</div>
           </div>
           {/* Choice */}
-          <div className='flex flex-row pt-6 items-center'>
-            <div className='pr-3 text-xl'>ตัวเลือก</div>
+          <div className="flex flex-row pt-6 items-center">
+            <div className="pr-3 text-xl">ตัวเลือก</div>
             <div className="grid grid-cols-4">
-              {product?.choice.map((choice, index) => (
+              {product.types.map((choice, index) => (
                 <button
                   key={index}
                   onClick={() => setActiveChoice(index)}
-                  className={`m-2 py-3 px-7 place-content-center text-center max-h-md border border-black ${
-                    activeChoice === index ? 'bg-gray-400 text-white' : 'bg-gray-200'
-                  }`}
+                  className={`m-2 py-3 px-7 place-content-center text-center max-h-md border border-black ${activeChoice === index ? 'bg-gray-400 text-white' : 'bg-gray-200'}`}
                 >
                   {choice}
                 </button>
@@ -102,18 +133,18 @@ export default function ProductBox({ pid }: { pid: number }) {
             </div>
           </div>
           {/* Add To Cart */}
-          <div className='pt-10'>
-            <button className='py-3 px-9 bg-[#00BF7A] text-2xl text-white font-bold tracking-wider rounded'>Add To Cart</button>
+          <div className="pt-10">
+            <button onClick={handleAddToCart} className="py-3 px-9 bg-[#00BF7A] text-2xl text-white font-bold tracking-wider rounded">Add To Cart</button>
           </div>
         </div>
         <Toaster />
       </div>
       {/* Description */}
       <div className="mx-8 max-h-fit pb-5">
-        <div className='bg-gray-200 py-3 pl-5 text-2xl'>รายละเอียดสินค้า</div>
+        <div className="bg-gray-200 py-3 pl-5 text-2xl">รายละเอียดสินค้า</div>
       </div>
       <div className="mx-8 max-h-fit pb-10">
-        <div className='bg-gray-200 py-3 pl-5 text-2xl'>{product?.description}</div>
+        <div className="bg-gray-200 py-3 pl-5 text-2xl">{product.detail}</div>
       </div>
     </div>
   );

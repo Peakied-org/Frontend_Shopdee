@@ -1,7 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
 import { products } from '@/products';
-import { Product } from '@/interfaces';
 
 export default function RecommendedProducts() {
   // Shuffle the products array
@@ -27,7 +26,7 @@ export default function RecommendedProducts() {
         {shuffledProducts.map((item) => (
           <Link key={item.id} href={`/product/${item.id}`} passHref>
             <div>
-              <img src={item.picture[0]} alt={item.name}/>
+              <img src={item.images[0]} alt={item.name}/>
               <div className='bg-white py-2 px-2'>
                 <div className='text-2xl'>{item.name}</div>
                 <div className='line-through text-sm pt-2 text-gray-400'>฿{item.cost}</div>

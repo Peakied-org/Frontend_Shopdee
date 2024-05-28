@@ -1,14 +1,14 @@
 type Product = {
     id: number;
     name: string;
-    picture: string[];
+    images: string[];
     cost: number;
     discount: number;
-    description: string;
+    detail: string;
     category: string;
     stock: number;
     sold: number;
-    choice: string[];
+    types: string[];
     storeId: Store;
 };
 
@@ -43,9 +43,8 @@ type CartDetail = {
 type Coupon = {
     id: number;
     name: string;
-    discount: string;
-    start_date: string;
-    expiry_date: string;
+    discount: number;
+    image: string
 };
 
 type Order = {
