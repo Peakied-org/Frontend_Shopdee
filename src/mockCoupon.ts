@@ -1,30 +1,44 @@
 export const coupon = [
     {
         id:1,
-        name:"5.5 Sale",
-        discount:"15",
-        start_date:"05-05-2024",
-        expiry_date:"20-05-2024"
+        name: "midMonth",
+        discount: 20,
+        image: "https://drive.google.com/file/d/1tGTYzhWun3ePcgdhCLwUoGCidxU52RtW/view?usp=drive_link"
     },
     {
         id:2,
-        name:"6.6 Sale",
-        discount:"16",
-        start_date:"06-06-2024",
-        expiry_date:"20-06-2024"
+        name: "1stAni",
+        discount: 30,
+        image: "https://drive.google.com/file/d/10z5eLVQYUzVlvYZoeo1HmX1wxIhH0I2Z/view?usp=drive_link"
     },
     {
         id:3,
-        name:"7.7 Sale",
-        discount:"17",
-        start_date:"07-07-2024",
-        expiry_date:"20-07-2024"
+        name: "newYear",
+        discount: 40,
+        image: "https://drive.google.com/file/d/10sVr7W3XBZhTHmzygZallMBAYhdg2WpW/view?usp=drive_link"
     },
     {
         id:4,
-        name:"8.8 Sale",
-        discount:"18",
-        start_date:"08-08-2024",
-        expiry_date:"20-08-2024"
+        name: "midYear",
+        discount: 50,
+        image: "https://drive.google.com/file/d/1yWkBm1k3rowheIREd7Ne-8zgGm8Kj-yZ/view?usp=drive_link"
+    },
+    {
+        id:5,
+        name: "6.6",
+        discount: 60,
+        image: "https://drive.google.com/file/d/19uJoATC7wTaMaCDY-8MUgKjaOCjANvvt/view?usp=drive_link"
+    },
+    {
+        id:6,
+        name: "6.6",
+        discount: 60,
+        image: "https://drive.google.com/file/d/19uJoATC7wTaMaCDY-8MUgKjaOCjANvvt/view?usp=drive_link"
+    },
+    {
+        id:5,
+        name: "6.6",
+        discount: 60,
+        image: "https://drive.google.com/file/d/19uJoATC7wTaMaCDY-8MUgKjaOCjANvvt/view?usp=drive_link"
     },
 ]
