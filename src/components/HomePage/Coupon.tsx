@@ -9,14 +9,12 @@ export default function Coupon(){
         <div>
             <div className="my-5 mx-5 px-2 bg-white max-h-fit flex flex-row">
                 {/* Coupon Topic */}
-                <div className="text-2xl py-3 pl-5 content-center">Coupon</div>
+                <div className="text-2xl py-3 pl-5 content-center font-bold">Coupon</div>
 
                 {/* Coupon List */}
-                <div className="flex flex-row flex-nowrap">
+                <div className="flex flex-row flex-nowrap overflow-x-auto">
                     {coupon.map((coupon) => (
-                        <div key={coupon.id} className="m-4">
-                            <Image src={convertImgUrl(coupon.image)} alt={coupon.name} width={250} height={250}/>
-                        </div>
+                        <Image key={coupon.id} src={convertImgUrl(coupon.image)} alt={coupon.name} width={250} height={200} className="m-5 rounded"/>
                     ))}
                 </div>
             </div>
