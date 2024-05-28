@@ -1,11 +1,21 @@
-import React from 'react';
+'use client'
+import React, { useEffect } from 'react';
 import Link from 'next/link';
-import { products } from '@/products';
+import Image from 'next/image';
+import { useAppSelector, useAppDispatch } from '@/redux/store'; 
+import { fetchItems } from '@/redux/features/itemSlice'; 
+import convertImgUrl from '../ControlSystem/convertImgUrl';
+import { Product } from '@/interfaces'; 
 
 export default function RecommendedProducts() {
-  // Shuffle the products array
-  const shuffledProducts = shuffleArray(products);
+  const dispatch = useAppDispatch();
+  const { items, loading, error } = useAppSelector(state => state.items);
 
+  useEffect(() => {
+    dispatch(fetchItems());
+  }, [dispatch]);
+
+  // Shuffle the products array
   function shuffleArray(array: Product[]): Product[] {
     const shuffledArray = [...array];
     for (let i = shuffledArray.length - 1; i > 0; i--) {
@@ -14,6 +24,11 @@ export default function RecommendedProducts() {
     }
     return shuffledArray;
   }
+
+  const shuffledProducts = shuffleArray(items);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <div>
@@ -26,7 +41,7 @@ export default function RecommendedProducts() {
         {shuffledProducts.map((item) => (
           <Link key={item.id} href={`/product/${item.id}`} passHref>
             <div>
-              <img src={item.images[0]} alt={item.name}/>
+              <Image src={convertImgUrl(item.images[0])} alt={item.name} width={1000} height={1000}/>
               <div className='bg-white py-2 px-2'>
                 <div className='text-2xl'>{item.name}</div>
                 <div className='line-through text-sm pt-2 text-gray-400'>฿{item.cost}</div>

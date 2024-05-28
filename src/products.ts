@@ -3,7 +3,10 @@ export const products: Product[] = [
   {
     id:1,
     name: "Pen",
-    images: ["/img/item/1/1.png", "/img/item/1/2.png", "/img/item/1/3.png", "/img/item/1/4.png"],
+    images: ["https://drive.google.com/file/d/1U6A2V0p75m4jHGLiP7oQQ6J-LQSLLU5S/view?usp=drive_link",
+              "https://drive.google.com/file/d/1jgOhPxuNtkcpNmLwy5q4Q1BvfMwDwg67/view?usp=drive_link",
+              "https://drive.google.com/file/d/1cHhv_3Oadvvrs73bIBaCpvKQ0plki89X/view?usp=drive_link",
+              "https://drive.google.com/file/d/1Qr5H0Jyt-fE9Ae60U4kuazkBK4frsWAe/view?usp=drive_link"],
     cost: 200,
     discount: 10,
     detail: "A high-quality pen for smooth writing.",
