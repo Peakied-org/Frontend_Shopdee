@@ -12,7 +12,7 @@ export default function TopMenu() {
 
     const [user, setUser] = useState<User | null>(null);
     const {data:session} = useSession();
-    console.log(session)
+    //console.log(session)
     if(session){
     useEffect(() => {
         const fetchData = async () => {

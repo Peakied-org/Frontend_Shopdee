@@ -1,11 +1,15 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { cartitem } from '@/cartItem';
+import { useAppSelector, useAppDispatch } from '@/redux/store';
+import { incrementQuantity, decrementQuantity, removeItem } from '@/redux/features/cartSlice';
 import { coupon } from '@/mockCoupon';
+import convertImgUrl from "../ControlSystem/convertImgUrl"
+import Image from 'next/image';
 
 export default function CartItems() {
-    const [items, setItems] = useState(cartitem);
+    const items = useAppSelector((state) => state.cart.items);
+    const dispatch = useAppDispatch();
     const [selectedCoupon, setSelectedCoupon] = useState<Coupon | null>(null);
     const [totalPrice, setTotalPrice] = useState(0);
     const router = useRouter();
@@ -16,24 +20,20 @@ export default function CartItems() {
 
     const calculateTotal = () => {
         const itemTotal = items.reduce((sum, item) => sum + (item.cost - item.discount) * item.quantity, 0);
-        const discount = selectedCoupon ? (itemTotal * parseInt(selectedCoupon.discount) / 100) : 0;
+        const discount = selectedCoupon ? (itemTotal * selectedCoupon.discount / 100) : 0;
         setTotalPrice(itemTotal - discount);
     };
 
     const plusQuantity = (id: number) => {
-        setItems(items.map(item =>
-            item.id === id ? { ...item, quantity: item.quantity + 1 } : item
-        ));
+        dispatch(incrementQuantity(id));
     };
 
     const minusQuantity = (id: number) => {
-        setItems(items.map(item =>
-            item.id === id && item.quantity > 1 ? { ...item, quantity: item.quantity - 1 } : item
-        ));
+        dispatch(decrementQuantity(id));
     };
 
     const deleteItem = (id: number) => {
-        setItems(items.filter(item => item.id !== id));
+        dispatch(removeItem(id));
     };
 
     const handleCouponChange = (event: any) => {
@@ -47,7 +47,7 @@ export default function CartItems() {
     };
 
     return (
-        <div className='mx-6'>
+        <div className='mx-'>
             {/* Header Bar */}
             <div className="bg-white p-4 mb-4">
                 <div className="grid grid-cols-6 gap-4 items-center font-semibold">
@@ -65,7 +65,7 @@ export default function CartItems() {
                 <div key={item.id} className="grid grid-cols-6 gap-4 items-center border-b py-4">
                     {/* Image */}
                     <div className="flex justify-center">
-                        <img src={item.picture[0]} alt={item.name} className="w-24 h-24 object-cover" />
+                        <Image src={convertImgUrl(item.picture)} alt={item.name} width={0} height={0} className="w-24 h-24 object-cover" />
                     </div>
                     {/* Name */}
                     <div>
@@ -102,7 +102,7 @@ export default function CartItems() {
 
             {/* Coupon and Total Price Section */}
             <div className="bg-white p-4 mt-4 grid grid-cols-4 gap-4 items-center">
-                {/* Select Coupon Message */}
+
                 <div className="text-center text-2xl">Select Coupon</div>
                 
                 {/* Coupon Selection */}
@@ -116,11 +116,7 @@ export default function CartItems() {
                         ))}
                     </select>
                 </div>
-                
-                {/* Total Price Message */}
                 <div className="text-center text-2xl">Total Price</div>
-                
-                {/* Total Price and Order Button */}
                 <div className="flex flex-col items-center">
                     <span className="text-green-600 text-lg">{totalPrice} ฿</span>
                     <button onClick={handleOrder} className="bg-green-500 text-white px-4 py-2 mt-2">Order</button>

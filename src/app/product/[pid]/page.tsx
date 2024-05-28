@@ -12,7 +12,7 @@ export default function product({ params }: { params: Params }) {
     return (
         <main>
             <ProductBox pid={params.pid} />
-            <ViewStore pid={params.pid}/>
+            {/* <ViewStore pid={params.pid}/> */}
             <RecommendedProducts/>
             <Toaster position="bottom-right"/>
         </main>
