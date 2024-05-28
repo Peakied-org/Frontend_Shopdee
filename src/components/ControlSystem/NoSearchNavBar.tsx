@@ -1,25 +1,53 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSession } from 'next-auth/react';
+import getUserProfile from '@/lib/getUserProfile';
 
-export default function NavBar(){
+export default function TopMenu() {
     const [showMenu, setShowMenu] = useState(false);
 
-    return(
+    const [user, setUser] = useState<User | null>(null);
+    const {data:session} = useSession();
+    console.log(session)
+    if(session){
+    useEffect(() => {
+        const fetchData = async () => {
+          const profile = await getUserProfile(session.user.body.token);
+          if (profile) {
+            setUser(profile);
+          }
+        };
+        fetchData();
+        }, []);
+    }
+
+    return (
         <div className="fixed top-0 left-0 right-0 bg-custom-green h-24 z-30 flex gap-5 flex-row-reverse">
             <div className='flex flex-row absolute left-10 h-full items-center'>
                 <Link href="/" className='pr-16'>
                     <Image src='/img/weblogo.png' alt='logo' style={{ height: '100%', width: 'auto' }}
                         width={0} height={0} sizes='100vh' />
                 </Link>
-
-                <div className="ml-4 w-[50vw]">
-
-                </div>
             </div>
 
             <div className='flex flex-row absolute items-center right-10 h-full space-x-16'>
+                {
+                    user? 
+                        user.body.role === "SELLER" ? 
+
+                        <Link href="/store">
+                            <Image src='/img/sellerIcon.png' alt='store' style={{ height: '30%', width: 'auto' }}
+                                width={0} height={0} sizes='25vh' />
+                        </Link> : user.body.role === "ADMIN" ? 
+
+                            <Link href="/store">
+                                <Image src='/img/adminIcon.png' alt='cart' style={{ height: '30%', width: 'auto' }}
+                                    width={0} height={0} sizes='25vh' />
+                            </Link> : ""
+                    : ""
+                }
                 <Link href="/cart">
                     <Image src='/img/cart.png' alt='cart' style={{ height: '30%', width: 'auto' }}
                         width={0} height={0} sizes='25vh' />
@@ -37,12 +65,19 @@ export default function NavBar(){
                         <Link href="/orders">
                             <p className="w-full px-4 py-2 text-left" onClick={() => setShowMenu(false)}>Order History</p>
                         </Link>
-                        <Link href="/auth/login">
+                        {
+                            user?  <Link href="/api/auth/signout">
+                            <p className="w-full px-4 py-2 text-left" onClick={() => setShowMenu(false)}>Log-out {user.body.name}</p>
+                        </Link> 
+                            : 
+                            <Link href="/auth/login">
                             <p className="w-full px-4 py-2 text-left" onClick={() => setShowMenu(false)}>Log-in</p>
                         </Link>
+                        }
+                        
                     </div>
                 )}
             </div>
         </div>
-    )
+    );
 }

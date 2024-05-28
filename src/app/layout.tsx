@@ -23,7 +23,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <ReduxProvider>
         <NextAuthProvider session={session}>
         <TopMenu/>
-        <main className="container mx-auto mt-[navbarHeight] px-4 py-6">
+        <main className="container mx-auto mt-[navbarHeight]">
             {children}
         </main>
         <Footer/>

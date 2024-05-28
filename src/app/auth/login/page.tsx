@@ -33,7 +33,7 @@ export default function Login() {
                 </Link>
                 <p className="font-mono text-emerald-500 mr-16 text-3xl font-bold uppercase">login</p>
             </div>
-            <div className="fixed top-0 left-0 right-0 bottom-0 bg-custom-green flex">
+            <div className="py-16 bg-custom-green flex w-[100vw] h-[90vh]">
                 <div className="w-1/2 flex flex-col items-center justify-center">
                     <img src="/img/weblogo.png" alt="Descriptive text" className="w-[30vw] h-fit"/>
                     <p className="text-2xl font-inter font-bold tracking-wide line-clamp-2 text-white">ช้อปได้ทุกที่ ช้อปดีเท่านั้น</p>

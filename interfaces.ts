@@ -55,3 +55,10 @@ type Order = {
     orderDate: string;
     status: string;
 }
+
+type User = {
+    body: {
+        name: string,
+        role: string,
+    }
+}

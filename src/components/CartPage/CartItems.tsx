@@ -47,7 +47,7 @@ export default function CartItems() {
     };
 
     return (
-        <div className=''>
+        <div className='mx-6'>
             {/* Header Bar */}
             <div className="bg-white p-4 mb-4">
                 <div className="grid grid-cols-6 gap-4 items-center font-semibold">

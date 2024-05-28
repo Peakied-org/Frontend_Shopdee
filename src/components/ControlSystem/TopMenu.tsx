@@ -10,13 +10,13 @@ export default function TopMenu() {
     const [showMenu, setShowMenu] = useState(false);
     const router = useRouter();
 
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState<User | null>(null);
     const {data:session} = useSession();
-    //console.log(session)
+    console.log(session)
     if(session){
     useEffect(() => {
         const fetchData = async () => {
-          const profile = await getUserProfile(session?.user.body.token);
+          const profile = await getUserProfile(session.user.body.token);
           if (profile) {
             setUser(profile);
           }
@@ -84,7 +84,7 @@ export default function TopMenu() {
                             <p className="w-full px-4 py-2 text-left" onClick={() => setShowMenu(false)}>Order History</p>
                         </Link>
                         {
-                            session?  <Link href="/api/auth/signout">
+                            user?  <Link href="/api/auth/signout">
                             <p className="w-full px-4 py-2 text-left" onClick={() => setShowMenu(false)}>Log-out {user.body.name}</p>
                         </Link> 
                             : 
