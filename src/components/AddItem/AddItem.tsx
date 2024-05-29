@@ -5,7 +5,6 @@ import addItem from "@/lib/addItem";
 import { useSession } from "next-auth/react";
 
 export default function AddItem({ sid }: { sid: number }) {
-    const [user, setUser] = useState<User | null>(null);
     const { data: session } = useSession();
 
     const [opt, setOpt] = useState<string[]>([]);

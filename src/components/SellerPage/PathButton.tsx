@@ -54,7 +54,7 @@ export default function PathButton({ sid }: { sid: number }) {
                     <Link href={`/store/${store.id}/addItem/`} passHref>
                         <div className="bg-[#00BF7A] px-12 py-3 text-2xl text-white font-semibold mx-14 my-5 cursor-pointer">Add Product</div>
                     </Link>
-                    <Link href={`/`} passHref>
+                    <Link href={`/order`} passHref>
                         <div className="bg-[#00BF7A] px-12 py-3 text-2xl text-white font-semibold mx-14 my-5 cursor-pointer">View Order</div>
                     </Link>
                 </>

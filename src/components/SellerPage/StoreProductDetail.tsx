@@ -8,9 +8,14 @@ import { useAppSelector, useAppDispatch } from '@/redux/store';
 import { fetchStores } from "@/redux/features/storeSlice";
 import Image from "next/image";
 import convertImgUrl from "../ControlSystem/convertImgUrl";
+import deleteItem from "@/lib/deleteItem";
+import { useSession } from "next-auth/react";
 
 export default function StoreProductDetail({ sid }: { sid: number }) {
+    const { data: session } = useSession();
     const [store, setStore] = useState<Store | null>(null);
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const [itemToDelete, setItemToDelete] = useState<number | null>(null);
     const dispatch = useAppDispatch();
     const { stores, sloading, error } = useAppSelector((state) => state.stores);
 
@@ -26,6 +31,25 @@ export default function StoreProductDetail({ sid }: { sid: number }) {
             setStore(matchedStore || null);
         }
     }, [stores, sloading, sid]);
+
+    const handleDelete = async () => {
+        if (itemToDelete !== null) {
+            try {
+                if(store && session && itemToDelete !== null){
+                    await deleteItem(itemToDelete, session.user.body.token);
+                    setStore({
+                        ...store,
+                        items: store.items.filter(item => item.id !== itemToDelete)
+                    });
+                setIsPopupOpen(false);
+                setItemToDelete(null);
+                }
+                
+            } catch (error) {
+                console.error("Error deleting item:", error);
+            }
+        }
+    };
 
     if (sloading) {
         return <div>Loading...</div>;
@@ -45,7 +69,7 @@ export default function StoreProductDetail({ sid }: { sid: number }) {
             <div className="">
                 {store.items.map((item) => (
                     <div key={item.id} className="bg-white my-6 grid grid-cols-5 relative">
-                        <Image src={convertImgUrl(item.images[0])} alt={item.name} width={1000} height={1000} className="p-6"/>
+                        <Image src={convertImgUrl(item.images[0])} alt={item.name} width={1000} height={1000} className="p-6" />
                         <div className="content-center text-3xl ml-7 font-bold">{item.name}</div>
                         <div className="flex flex-col place-content-center text-center">
                             <div className="text-3xl font-bold">Order</div>
@@ -60,11 +84,37 @@ export default function StoreProductDetail({ sid }: { sid: number }) {
                                 <FaPencilAlt color="gray" size={36} />
                             </Link>
                             <button className="bg-[#00BF7A] px-12 py-3 rounded text-white font-semibold text-2xl my-4 mr-10">View</button>
-                            <RiDeleteBin6Fill color="red" size={36} />
+                            <RiDeleteBin6Fill color="red" size={36} onClick={() => {
+                                setIsPopupOpen(true);
+                                setItemToDelete(item.id);
+                            }} />
                         </div>
                     </div>
                 ))}
             </div>
+
+            {isPopupOpen && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+                    <div className="bg-white p-10 rounded">
+                        <h2 className="text-2xl font-semibold mb-4">Confirm Deletion</h2>
+                        <p>Are you sure you want to delete this item?</p>
+                        <div className="flex justify-end mt-4">
+                            <button
+                                className="mr-4 px-4 py-2 bg-gray-300 rounded"
+                                onClick={() => setIsPopupOpen(false)}
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                className="px-4 py-2 bg-red-600 text-white rounded"
+                                onClick={handleDelete}
+                            >
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
