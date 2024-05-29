@@ -5,14 +5,24 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import getUserProfile from '@/lib/getUserProfile';
+import { useAppSelector, useAppDispatch } from '@/redux/store';
+import { fetchStores } from "@/redux/features/storeSlice";
 
 export default function TopMenu() {
     const [showMenu, setShowMenu] = useState(false);
     const router = useRouter();
 
+    const dispatch = useAppDispatch();
+    const { stores, sloading  } = useAppSelector((state) => state.stores);
+    const [store, setStore] = useState<Store | null>(null);
+
     const [user, setUser] = useState<User | null>(null);
     const {data:session} = useSession();
-    //console.log(session)
+    
+    useEffect(() => {
+        dispatch(fetchStores());
+    }, [dispatch]);
+    
     if(session){
     useEffect(() => {
         const fetchData = async () => {
@@ -23,6 +33,21 @@ export default function TopMenu() {
         };
         fetchData();
         }, []);
+
+        useEffect(() => {
+            const fetchProductAndStores = async () => {
+                try {
+                    if (!sloading && stores.length > 0) {
+                      const matchedStore = stores.find((store: { userID: number }) => store.userID === user?.body.id);
+                      setStore(matchedStore || null);
+                    }
+                } catch (error) {
+                    console.error('Error fetching product or stores:', error);
+                }
+            };
+      
+            fetchProductAndStores();
+        }, [sloading, stores]);
     }
     
     const handleSearch = (event: any) => {
@@ -53,12 +78,12 @@ export default function TopMenu() {
             <div className='flex flex-row absolute items-center right-10 h-full space-x-16'>
                 {
                     user? 
-                        user.body.role === "SELLER" ? 
+                        user.body.role === "SELLER" ? store?
 
-                        <Link href="/store">
+                        <Link href={`/store/${store.id}`}>
                             <Image src='/img/sellerIcon.png' alt='store' style={{ height: '30%', width: 'auto' }}
-                                width={0} height={0} sizes='25vh' />
-                        </Link> : user.body.role === "ADMIN" ? 
+                                width={100} height={100} sizes='25vh' />
+                        </Link> : "" : user.body.role === "ADMIN" ? 
 
                             <Link href="/store">
                                 <Image src='/img/adminIcon.png' alt='cart' style={{ height: '30%', width: 'auto' }}

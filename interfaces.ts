@@ -61,5 +61,6 @@ type User = {
     body: {
         name: string,
         role: string,
+        id: number,
     }
 }
