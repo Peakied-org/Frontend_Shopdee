@@ -16,6 +16,8 @@ type Store = {
     id: number;
     name: string;
     detail: string;
+    userID: number;
+    items: Product[];
     image: string;
     banner: string;
 }

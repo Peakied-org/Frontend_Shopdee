@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import cartReducer from "./features/cartSlice";
 import couponReducer from "./features/couponSlice";
 import itemReducer from "./features/itemSlice";
+import storeReducer from "./features/storeSlice";
 import { TypedUseSelectorHook, useSelector, useDispatch } from "react-redux";
 
 export const store = configureStore({
@@ -9,6 +10,7 @@ export const store = configureStore({
         cart: cartReducer,
         coupons: couponReducer,
         items: itemReducer,
+        stores: storeReducer,
     }
 });
 
