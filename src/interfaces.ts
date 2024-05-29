@@ -10,7 +10,7 @@ export interface Store {
 export interface Product {
     id: number;
     name: string;
-    picture: string[];
+    images: string[];
     cost: number;
     discount: number;
     description: string;

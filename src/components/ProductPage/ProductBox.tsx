@@ -83,7 +83,7 @@ export default function ProductBox({ pid }: { pid: number }) {
         <div>
           {/* Main Picture */}
           <div className="pt-10 pl-10 pb-5">
-            <Image src={convertImgUrl(product.images[imgNum])} alt={product.name} width={0} height={0} className="max-w-[40rem] h-auto w-[30vw]" />
+            <Image src={convertImgUrl(product.images[imgNum])} alt={product.name} width={1200} height={1200} className="max-w-[40rem] h-auto w-[32vw]" />
           </div>
           {/* Optional Picture */}
           <div className="flex flex-row pl-10 pb-10">
@@ -92,7 +92,7 @@ export default function ProductBox({ pid }: { pid: number }) {
                 key={index}
                 src={convertImgUrl(pic)}
                 alt={pic}
-                width={0} height={0}
+                width={1000} height={1000}
                 className={`max-w-[10rem] cursor-pointer w-[8vw] h-auto ${activeImage === index ? 'border-4 border-black' : ''}`}
                 onClick={() => {setActiveImage(index); setImgNum(index)}}
               />
@@ -102,11 +102,14 @@ export default function ProductBox({ pid }: { pid: number }) {
         {/* Product Info */}
         <div className="pt-10">
           {/* Product Name */}
-          <div className="text-3xl font-semibold">{product.name}</div>
-          {/* Product Price */}
-          <div className="text-2xl pt-5">{discountedCost} ฿</div>
-          {/* Discount */}
-          <div className="text-xl pt-2 text-red-500">{product.discount}% Sale!</div>
+          <div className="text-5xl font-semibold mt-10">{product.name}</div>
+          <div className='flex flex-row my-5 mr-16 bg-gray-200 p-5 gap-10 place-content-start'>
+            {/* Product Price */}
+            <div className="text-3xl self-center">{discountedCost} ฿</div>
+            {/* Discount */}
+            <div className="text-2xl text-red-500 self-center">{product.discount}% Sale!</div>
+          </div>
+          
           {/* Count */}
           <div className="flex flex-row pt-7 items-center">
             <div className="pr-3 text-xl">จำนวน</div>
