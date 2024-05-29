@@ -3,8 +3,10 @@ import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import register from "@/lib/userRegister";
+import convertImgUrl from "@/components/ControlSystem/convertImgUrl";
+import Image from "next/image";
 
-export default async function Register() {
+export default function Register() {
     const [isSeller, setIsSeller] = useState(false);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -13,8 +15,7 @@ export default async function Register() {
     const [cardNumber, setCardNumber] = useState("");
     const router = useRouter();
 
-
-    const handleRegister = async (event: any) => {
+    const handleRegister = async (event:any) => {
         event.preventDefault();
         try {
             await register(username, telephone, address, password, isSeller ? cardNumber : null);
@@ -26,19 +27,22 @@ export default async function Register() {
     };
 
     return (
-        <main>
-            <div className={"fixed top-0 left-0 right-0 bg-white h-24 z-30 flex flex-row items-center justify-between"}>
+        <main className="bg-custom-green min-h-screen flex flex-col">
+            <div className="fixed top-0 left-0 right-0 bg-white h-24 z-30 flex flex-row items-center justify-between">
                 <Link href={'/'}>
-                    <img className="w-fit h-[80%] object-cover ml-16" src="/img/logoReverse.png" alt="logo"/>
+                    <Image className="w-fit h-[80%] object-cover ml-16"
+                        src={convertImgUrl("https://drive.google.com/file/d/1vCWvdGN7vvwtF1IXqtaStG2Y7Mdeo116/view?usp=drive_link")}
+                        alt="logo" height={200} width={200} />
                 </Link>
                 <p className="font-mono text-emerald-500 mr-16 text-3xl font-bold uppercase">register</p>
             </div>
-            <div className="py-16 bg-custom-green flex w-[100vw]">
+            <div className="flex flex-grow items-center justify-center pt-24">
                 <div className="w-1/2 flex flex-col items-center justify-center">
-                    <img src="/img/weblogo.png" alt="Descriptive text" className="w-[30vw] h-fit"/>
+                    <Image src={convertImgUrl("https://drive.google.com/file/d/1ZIo06CsqPuSLIFt23IaoYqp1oo5iSrFU/view?usp=drive_link")}
+                        alt="Descriptive text" height={400} width={400} className="w-[30vw] h-fit" />
                     <p className="text-2xl font-inter font-bold tracking-wide line-clamp-2 text-white">ช้อปได้ทุกที่ ช้อปดีเท่านั้น</p>
                 </div>
-                <div className="w-1/2 flex items-center justify-center mt-24">
+                <div className="w-1/2 flex items-center justify-center">
                     <div className="bg-white p-4 w-[75%] h-fit rounded-lg">
                         <p className="font-mono text-emerald-500 ml-4 text-3xl font-bold uppercase">register</p>
                         <div className="flex justify-center my-4">
