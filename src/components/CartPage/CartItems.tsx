@@ -14,7 +14,7 @@ export default function CartItems() {
     const [totalPrice, setTotalPrice] = useState(0);
     const router = useRouter();
 
-    const { coupons, loading, error } = useAppSelector((state) => state.coupons);
+    const { coupons } = useAppSelector((state) => state.coupons);
 
     useEffect(() => {
         dispatch(fetchCoupons());
@@ -54,15 +54,14 @@ export default function CartItems() {
     };
 
     return (
-        <div className='mx-'>
+        <div className='mx-6'>
             {/* Header Bar */}
             <div className="bg-white p-4 mb-4">
-                <div className="grid grid-cols-6 gap-4 items-center font-semibold">
+                <div className="grid grid-cols-6 text-xl gap-4 items-center font-semibold">
                     <div className="col-span-2 text-center">Product</div>
                     <div>Price</div>
                     <div>Quantity</div>
                     <div>Total Price</div>
-                    <div></div>
                 </div>
             </div>
 
@@ -76,7 +75,7 @@ export default function CartItems() {
                     </div>
                     {/* Name */}
                     <div>
-                        <div className="text-lg font-bold">{item.name}</div>
+                        <div className="text-xl font-bold">{item.name}</div>
                     </div>
                     {/* Price */}
                     <div>

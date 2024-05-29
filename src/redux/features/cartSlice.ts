@@ -13,9 +13,22 @@ interface CartState {
   items: CartItem[];
 }
 
-const initialState: CartState = {
-  items: [],
+// Attempt to load the cart state from localStorage
+const loadState = () => {
+  try {
+    const serializedState = localStorage.getItem('cart');
+    if (serializedState === null) {
+      return undefined; // No saved state found
+    }
+    return JSON.parse(serializedState);
+  } catch (err) {
+    console.error('Failed to load cart state:', err);
+    return undefined;
+  }
 };
+
+// Set the initial state to the loaded state or fallback to the default
+const initialState: CartState = loadState() || { items: [] };
 
 const cartSlice = createSlice({
   name: 'cart',
@@ -26,7 +39,7 @@ const cartSlice = createSlice({
       if (existingItem) {
         existingItem.quantity += action.payload.quantity;
       } else {
-        state.items.push(action.payload);
+        state.items.push({ ...action.payload, quantity: 1 }); // Ensure new items have a quantity of 1
       }
     },
     incrementQuantity: (state, action: PayloadAction<number>) => {
@@ -46,6 +59,7 @@ const cartSlice = createSlice({
     },
   },
 });
+
 
 export const { addToCart, incrementQuantity, decrementQuantity, removeItem } = cartSlice.actions;
 export default cartSlice.reducer;
