@@ -62,5 +62,8 @@ type User = {
         name: string,
         role: string,
         id: number,
+        tel: string,
+        address: string,
+        cardNumber: string
     }
 }
