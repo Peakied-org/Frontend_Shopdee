@@ -97,7 +97,7 @@ export default function TopMenu() {
                 </Link>
 
                 <button onClick={() => setShowMenu(!showMenu)}>
-                    <Image src='/img/profileIcon.png' alt='profile' width={30} height={30} />
+                    <Image src='/img/profileIcon.png' alt='profile' width={50} height={50} />
                 </button>
                 {showMenu && (
                     <div className="absolute right-0 mt-24 w-48 bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg">

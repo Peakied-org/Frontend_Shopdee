@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import getStores from '@/lib/getStore';
 
-
 interface StoreState {
     stores: Store[];
     sloading: boolean;
