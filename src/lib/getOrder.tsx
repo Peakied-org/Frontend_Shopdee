@@ -1,13 +1,25 @@
-export default async function getOrders(token:string) {
-    const response = await fetch("http://localhost:8080/order", {
-        method: "GET",
-        headers: {
-            authorization: `Bearer ${token}`,
+export default async function getOrders(token: string) {
+    console.log("Fetching orders with token:", token);
+    try {
+        const response = await fetch("http://localhost:8080/order", {
+            method: "GET",
+            headers: {
+                authorization: `Bearer ${token}`,
+            },
+        });
+
+        console.log("Response status:", response.status);
+
+        if (!response.ok) {
+            throw new Error(`Cannot get order: ${response.statusText}`);
         }
-    })
-    if(!response.ok) {
-        throw new Error("Cannot get order")
+
+        const data = await response.json();
+        console.log("Fetched data:", data);
+        return data;
+    } catch (error) {
+        console.error("Error fetching orders:", error);
+        throw error;
     }
-    const data = await response.json();
-    return data.body;
 }
+    

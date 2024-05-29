@@ -1,18 +1,44 @@
-import { orderItem } from "@/order"
+'use client'
+import { useEffect } from "react";
+import { useSession } from "next-auth/react";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { fetchOrders } from "@/redux/features/orderSlice";
+import Image from "next/image";
+import convertImgUrl from "../ControlSystem/convertImgUrl";
 
-export default function OrderList(){
+export default function OrderList() {
+    const { data: session, status } = useSession();
+    const dispatch = useAppDispatch();
+    const { orders, loading, error } = useAppSelector((state) => state.orders);
 
-    const orderlist: Order[] = [...orderItem];
+    useEffect(() => {
+        if (status === "loading") {
+            // Session is loading
+            return;
+        }
 
-    return(
+        if (session) {
+            dispatch(fetchOrders(session.user.body.token));
+        }
+    }, [session, status, dispatch]);
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return <div>Error: {error}</div>;
+    }
+
+    return (
         <div className="flex flex-col items-center">
-            {orderlist.map(order => (
-                <div key={order.orderId} className="bg-white p-6 mb-4 shadow-md w-[70%] justify-between">
-                    {order.items.map(item => (
+            {orders.map(order => (
+                <div key={order.id} className="bg-white p-6 mb-4 shadow-md w-[70%] justify-between">
+                    {order.orderDetails.map(item => (
                         <div key={item.id} className="grid grid-cols-3 gap-4 items-center border-b py-2">
                             {/* Image */}
                             <div className="flex justify-center">
-                                <img src={item.picture[0]} alt={item.name} className="w-24 h-24 object-cover" />
+                                <Image src={convertImgUrl(item.image)} alt={item.name} height={1000} width={1000} className="w-24 h-24 object-cover" />
                             </div>
                             {/* Name */}
                             <div>
@@ -20,7 +46,7 @@ export default function OrderList(){
                             </div>
                             {/* Price */}
                             <div className="text-2xl text-green-600 font-semibold">
-                                {(item.cost - item.discount) * item.quantity} ฿
+                                {item.cost * item.quantity} ฿
                             </div>
                         </div>
                     ))}
@@ -28,11 +54,11 @@ export default function OrderList(){
                         <div className="col-span-1 text-3xl text-center">Total Cost</div>
                         <div className="col-span-1"></div>
                         <div className="col-span-1 text-3xl text-green-600">
-                            {order.totalPrice} ฿
+                            {order.totalCost} ฿
                         </div>
                     </div>
                 </div>
             ))}
         </div>
-    )
+    );
 }
