@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAppSelector, useAppDispatch } from '@/redux/store';
 import { incrementQuantity, decrementQuantity, removeItem } from '@/redux/features/cartSlice';
-import { coupon } from '@/mockCoupon';
+import { fetchCoupons } from "@/redux/features/couponSlice";
 import convertImgUrl from "../ControlSystem/convertImgUrl"
 import Image from 'next/image';
 
@@ -14,12 +14,19 @@ export default function CartItems() {
     const [totalPrice, setTotalPrice] = useState(0);
     const router = useRouter();
 
+    const { coupons, loading, error } = useAppSelector((state) => state.coupons);
+
+    useEffect(() => {
+        dispatch(fetchCoupons());
+    }, [dispatch]);
+    const coupon = coupons;
+
     useEffect(() => {
         calculateTotal();
     }, [items, selectedCoupon]);
 
     const calculateTotal = () => {
-        const itemTotal = items.reduce((sum, item) => sum + (item.cost - item.discount) * item.quantity, 0);
+        const itemTotal = items.reduce((sum, item) => sum + (item.cost - (item.cost * item.discount)/100) * item.quantity, 0);
         const discount = selectedCoupon ? (itemTotal * selectedCoupon.discount / 100) : 0;
         setTotalPrice(itemTotal - discount);
     };
@@ -65,7 +72,7 @@ export default function CartItems() {
                 <div key={item.id} className="grid grid-cols-6 gap-4 items-center border-b py-4">
                     {/* Image */}
                     <div className="flex justify-center">
-                        <Image src={convertImgUrl(item.picture)} alt={item.name} width={0} height={0} className="w-24 h-24 object-cover" />
+                        <Image src={convertImgUrl(item.picture)} alt={item.name} width={100} height={100} className="w-24 h-24 object-cover" />
                     </div>
                     {/* Name */}
                     <div>
@@ -74,7 +81,7 @@ export default function CartItems() {
                     {/* Price */}
                     <div>
                         <div className="line-through text-gray-500 text-xs">{item.cost} ฿</div>
-                        <div className="text-2xl text-green-600 font-semibold">{item.cost - item.discount} ฿</div>
+                        <div className="text-2xl text-green-600 font-semibold">{item.cost - (item.cost * item.discount)/100} ฿</div>
                     </div>
                     {/* Quantity */}
                     <div className="flex items-center">
@@ -88,7 +95,7 @@ export default function CartItems() {
                     </div>
                     {/* Total Price */}
                     <div className="text-2xl text-green-600 font-semibold">
-                        {item.quantity * (item.cost - item.discount)} ฿
+                        {item.quantity * (item.cost - (item.cost * item.discount)/100)} ฿
                     </div>
                     {/* Delete Button */}
                     <div>

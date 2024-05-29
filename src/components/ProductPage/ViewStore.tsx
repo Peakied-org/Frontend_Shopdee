@@ -2,36 +2,41 @@
 import Link from 'next/link';
 import getItem from '@/lib/getItem';
 import { useState, useEffect } from 'react';
-import getStores from '@/lib/getStore';
+import { useAppSelector, useAppDispatch } from '@/redux/store';
+import { fetchStores } from "@/redux/features/storeSlice";
 import convertImgUrl from '../ControlSystem/convertImgUrl';
 import Image from 'next/image';
 
 export default function ViewStore({ pid }: { pid: number }) {
   const [product, setProduct] = useState<Product | null>(null);
-  const [stores, setStores] = useState<Store[]>([]);
   const [store, setStore] = useState<Store | null>(null);
+  const dispatch = useAppDispatch();
+  const { stores, sloading  } = useAppSelector((state) => state.stores);
+
+  useEffect(() => {
+    dispatch(fetchStores());
+}, [dispatch]);
 
   useEffect(() => {
       const fetchProductAndStores = async () => {
           try {
               const productData = await getItem(pid);
-              setProduct(productData.body);
-
-              const storesData = await getStores();
-              setStores(storesData);
-
-              const matchedStore = storesData.find((store: { id: number; }) => store.id === productData.body.storeID);
-              setStore(matchedStore || null);
+              setProduct(productData);
+                
+              if (!sloading && stores.length > 0) {
+                const matchedStore = stores.find((store: { id: number }) => store.id === productData.storeID);
+                setStore(matchedStore || null);
+              }
           } catch (error) {
               console.error('Error fetching product or stores:', error);
           }
       };
 
       fetchProductAndStores();
-  }, [pid]);
+  }, [sloading, stores, pid]);
 
   if (product == null || store == null) {
-      return null;
+      return <div>no store</div>;
   }
 
     return (

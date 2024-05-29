@@ -20,7 +20,7 @@ export default function ProductBox({ pid }: { pid: number }) {
     const fetchProduct = async () => {
       try {
         const data = await getItem(pid);
-        setProduct(data.body);
+        setProduct(data);
       } catch (error) {
         console.error('Error fetching product:', error);
       } finally {
