@@ -12,7 +12,7 @@ export default function ProductBox({ pid }: { pid: number }) {
   const [loading, setLoading] = useState(true);
   const [imgNum, setImgNum] = useState(0);
   const [count, setCount] = useState(1);
-  const [activeChoice, setActiveChoice] = useState<number | null>(null);
+  const [activeChoice, setActiveChoice] = useState<number>(0);
   const [activeImage, setActiveImage] = useState<number | null>(0);
   const dispatch = useAppDispatch();
 
@@ -70,7 +70,8 @@ export default function ProductBox({ pid }: { pid: number }) {
         cost: product.cost,
         discount: product.discount,
         quantity: count,
-        picture: product.images[0]
+        picture: product.images[0],
+        type: product.types[activeChoice]
       }));
       toast.success("Item added to cart");
     }
