@@ -1,5 +1,5 @@
 export default async function editProfile(token: string, tel: string|null, address: string|null, card_number: string|null) {
-    const response = await fetch("http://localhost:8080/api/v1/customers/me", {
+    const response = await fetch(`${process.env.BACKEND_URL}/api/v1/customers/me`, {
         method: "PUT",
         headers: {
             authorization: `Bearer ${token}`,

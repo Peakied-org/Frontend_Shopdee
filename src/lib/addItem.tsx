@@ -1,6 +1,6 @@
 export default async function addItem(id:number, token:string, name:string, cost:string, category:string, detail:string,
     stock:string|null, sold:string|null, discount:string|null, types:string[]|null, image:string[]) {
-    const response = await fetch(`http://localhost:8080/store/${id}`, {
+    const response = await fetch(`${process.env.BACKEND_URL}/store/${id}`, {
         method: "POST",
         headers: {
             authorization: `Bearer ${token}`,

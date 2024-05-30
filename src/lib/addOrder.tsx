@@ -1,5 +1,5 @@
 export default async function addOrder(token: string) {
-    const response = await fetch(`http://localhost:8080/order`, {
+    const response = await fetch(`${process.env.BACKEND_URL}/order`, {
         method: "POST",
         headers: {
             authorization: `Bearer ${token}`,

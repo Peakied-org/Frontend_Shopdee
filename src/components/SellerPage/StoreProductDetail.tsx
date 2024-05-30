@@ -10,6 +10,7 @@ import Image from "next/image";
 import convertImgUrl from "../ControlSystem/convertImgUrl";
 import deleteItem from "@/lib/deleteItem";
 import { useSession } from "next-auth/react";
+import getUserProfile from "@/lib/getUserProfile";
 
 export default function StoreProductDetail({ sid }: { sid: number }) {
     const { data: session } = useSession();
@@ -18,6 +19,8 @@ export default function StoreProductDetail({ sid }: { sid: number }) {
     const [itemToDelete, setItemToDelete] = useState<number | null>(null);
     const dispatch = useAppDispatch();
     const { stores, sloading, error } = useAppSelector((state) => state.stores);
+
+    const [user, setUser] = useState<User | null>(null);
 
     useEffect(() => {
         if (stores.length === 0) {
@@ -31,6 +34,18 @@ export default function StoreProductDetail({ sid }: { sid: number }) {
             setStore(matchedStore || null);
         }
     }, [stores, sloading, sid]);
+
+    if (session) {
+        useEffect(() => {
+            const fetchData = async () => {
+                const profile = await getUserProfile(session.user.body.token);
+                if (profile) {
+                    setUser(profile);
+                }
+            };
+            fetchData();
+        }, [session]);
+    }
 
     const handleDelete = async () => {
         if (itemToDelete !== null) {
@@ -60,7 +75,12 @@ export default function StoreProductDetail({ sid }: { sid: number }) {
     }
 
     if (!store) {
-        return <div>No store found</div>;
+        return null;
+    }
+    if(user && store){
+        if(user.body.role != "ADMIN" && user.body.id != store?.userID){
+            return null
+        }
     }
 
     return (

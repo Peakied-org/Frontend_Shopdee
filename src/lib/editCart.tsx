@@ -1,6 +1,6 @@
 export default async function editCart(cartDetailId: number, token: string, quantity: number) {
     // Edit cart to update the quantity
-    const editResponse = await fetch(`http://localhost:8080/cart/${cartDetailId}?quantity=${quantity}`, {
+    const editResponse = await fetch(`${process.env.BACKEND_URL}/cart/${cartDetailId}?quantity=${quantity}`, {
         method: "PUT",
         headers: {
             authorization: `Bearer ${token}`,

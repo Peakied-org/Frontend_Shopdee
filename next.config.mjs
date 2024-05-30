@@ -4,4 +4,10 @@ export default {
     images: {
       domains: ['drive.google.com'],
     },
+    experimental: {
+      serverActions: true
+    },
+    env: {
+      BACKEND_URL: process.env.BACKEND_URL
+    }
   };

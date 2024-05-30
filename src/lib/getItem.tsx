@@ -1,6 +1,6 @@
 export default async function getItem(id:number) {
 
-    const response = await fetch(`http://localhost:8080/item/${id}`,)
+    const response = await fetch(`${process.env.BACKEND_URL}/item/${id}`,)
     if(!response.ok){
         throw new Error("Failed to fetch promotion")
     }

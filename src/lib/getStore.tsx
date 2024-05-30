@@ -1,5 +1,5 @@
 export default async function getStores() {
-    const response = await fetch("http://localhost:8080/store");
+    const response = await fetch(`${process.env.BACKEND_URL}/store`);
     if (!response.ok) {
         throw new Error("Failed to fetch Store");
     }

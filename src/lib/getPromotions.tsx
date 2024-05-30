@@ -1,7 +1,7 @@
 
 export default async function getPromotions() {
 
-    const response = await fetch("http://localhost:8080/promotion",)
+    const response = await fetch(`${process.env.BACKEND_URL}/promotion`,)
     if(!response.ok){
         throw new Error("Failed to fetch promotion")
     }

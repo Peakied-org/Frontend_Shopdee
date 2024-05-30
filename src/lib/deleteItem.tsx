@@ -1,5 +1,5 @@
 export default async function deleteItem(id:number, token:string) {
-    const response = await fetch(`http://localhost:8080/store/item/${id}`, {
+    const response = await fetch(`${process.env.BACKEND_URL}/store/item/${id}`, {
         method: "DELETE",
         headers: {
             authorization: `Bearer ${token}`,

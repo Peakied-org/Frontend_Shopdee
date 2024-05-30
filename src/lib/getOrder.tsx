@@ -1,7 +1,7 @@
 export default async function getOrders(token: string) {
     console.log("Fetching orders with token:", token);
     try {
-        const response = await fetch("http://localhost:8080/order", {
+        const response = await fetch(`${process.env.BACKEND_URL}/order`, {
             method: "GET",
             headers: {
                 authorization: `Bearer ${token}`,

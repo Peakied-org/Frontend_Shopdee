@@ -1,6 +1,6 @@
 export default async function editItem(id:number, token:string, name:string, cost:string, category:string, detail:string,
     stock:string|null, sold:string|null, discount:string|null, types:string[]|null, image:string[]) {
-    const response = await fetch(`http://localhost:8080/store/item/${id}`, {
+    const response = await fetch(`${process.env.BACKEND_URL}/store/item/${id}`, {
         method: "PUT",
         headers: {
             authorization: `Bearer ${token}`,

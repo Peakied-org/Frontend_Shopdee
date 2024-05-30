@@ -43,8 +43,14 @@ export default function PathButton({ sid }: { sid: number }) {
         }, [sloading, stores, user]);
     }
 
-    if (!store && user?.body.role !== "ADMIN") {
+    if (!store) {
         return null;
+    }
+
+    if(user && store){
+        if(user.body.role != "ADMIN" && user.body.id != store?.userID){
+            return null
+        }
     }
 
     return (
@@ -54,7 +60,7 @@ export default function PathButton({ sid }: { sid: number }) {
                     <Link href={`/store/${store.id}/addItem/`} passHref>
                         <div className="bg-[#00BF7A] px-12 py-3 text-2xl text-white font-semibold mx-14 my-5 cursor-pointer">Add Product</div>
                     </Link>
-                    <Link href={`/order`} passHref>
+                    <Link href={`/orders`} passHref>
                         <div className="bg-[#00BF7A] px-12 py-3 text-2xl text-white font-semibold mx-14 my-5 cursor-pointer">View Order</div>
                     </Link>
                 </>

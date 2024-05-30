@@ -1,6 +1,6 @@
 export default async function addCart(id: number, token: string, type: string) {
     // Add item to cart
-    const addResponse = await fetch(`http://localhost:8080/cart/${id}?type=${type}`, {
+    const addResponse = await fetch(`${process.env.BACKEND_URL}/cart/${id}?type=${type}`, {
         method: "POST",
         headers: {
             authorization: `Bearer ${token}`,
