@@ -1,6 +1,18 @@
 import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react';
-import { products } from '@/products';
+import { useAppSelector, useAppDispatch } from '@/redux/store'; 
+import { fetchItems } from '@/redux/features/itemSlice'; 
+import { Product } from '@/interfaces';
+import convertImgUrl from '../ControlSystem/convertImgUrl';
+import Image from 'next/image';
+
+interface SortedProductsProps {
+    sortPrice: string;
+    sortChar: string;
+    minPrice: string;
+    maxPrice: string;
+    value: string;
+}
 
 export default function SortedProducts({ sortPrice, sortChar, minPrice, maxPrice, value }: SortedProductsProps) {
     const [displayedProducts, setDisplayedProducts] = useState<Product[]>([]);
@@ -8,9 +20,16 @@ export default function SortedProducts({ sortPrice, sortChar, minPrice, maxPrice
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const observer = useRef<IntersectionObserver | null>(null);
 
+    const dispatch = useAppDispatch();
+    const { items, loading, error } = useAppSelector(state => state.items);
+
+    useEffect(() => {
+        dispatch(fetchItems());
+    }, [dispatch]);
+
     const itemsPerPage = 16;
 
-    let sortedProducts: Product[] = [...products];
+    let sortedProducts: Product[] = [...items];
 
     if (value) {
         sortedProducts = sortedProducts.filter(product => product.name.toLowerCase().includes(value.toLowerCase()));
@@ -18,23 +37,23 @@ export default function SortedProducts({ sortPrice, sortChar, minPrice, maxPrice
 
     if (minPrice) {
         const minPriceNumber = parseFloat(minPrice);
-        sortedProducts = sortedProducts.filter(product => product.cost - product.discount >= minPriceNumber);
+        sortedProducts = sortedProducts.filter(product => product.cost - (product.cost * product.discount) / 100 >= minPriceNumber);
     }
 
     if (maxPrice) {
         const maxPriceNumber = parseFloat(maxPrice);
-        sortedProducts = sortedProducts.filter(product => product.cost - product.discount <= maxPriceNumber);
+        sortedProducts = sortedProducts.filter(product => product.cost - (product.cost * product.discount) / 100 <= maxPriceNumber);
     }
 
     if (sortPrice === 'priceLowHigh') {
-        sortedProducts.sort((a, b) => (a.cost - a.discount) - (b.cost - b.discount));
+        sortedProducts.sort((a, b) => (a.cost - (a.cost * a.discount) / 100) - (b.cost - (b.cost * b.discount) / 100));
     } else if (sortPrice === 'priceHighLow') {
-        sortedProducts.sort((a, b) => (b.cost - b.discount) - (a.cost - a.discount));
+        sortedProducts.sort((a, b) => (b.cost - (b.cost * b.discount) / 100) - (a.cost - (a.cost * a.discount) / 100));
     }
 
     if (sortChar) {
         sortedProducts.sort((a, b) => {
-            const priceDifference = (a.cost - a.discount) - (b.cost - b.discount);
+            const priceDifference = (a.cost - (a.cost * a.discount) / 100) - (b.cost - (b.cost * b.discount) / 100);
             if (priceDifference === 0) {
                 if (sortChar === 'a2z') {
                     return a.name.localeCompare(b.name);
@@ -61,10 +80,10 @@ export default function SortedProducts({ sortPrice, sortChar, minPrice, maxPrice
 
     useEffect(() => {
         setDisplayedProducts(sortedProducts.slice(0, itemsPerPage));
-    }, [sortPrice, sortChar, minPrice, maxPrice, value]);
+    }, [items, sortPrice, sortChar, minPrice, maxPrice, value]);
 
     useEffect(() => {
-        const handleObserver = (entries: any[]) => {
+        const handleObserver = (entries: IntersectionObserverEntry[]) => {
             const target = entries[0];
             if (target.isIntersecting) {
                 loadMoreProducts();
@@ -88,14 +107,14 @@ export default function SortedProducts({ sortPrice, sortChar, minPrice, maxPrice
         <div>
             <div className="grid grid-cols-4 gap-4 px-5 bg-white">
                 {displayedProducts.map((item, index) => (
-                    <Link key={index} href={item.name}>
+                    <Link key={index} href={`/product/${item.name}`} passHref>
                         <div>
-                            <img src={item.picture[0]} alt={item.name} />
+                            <Image src={convertImgUrl(item.images[0])} width={1000} height={1000} alt={item.name} />
                             <div className='bg-white py-2 px-2'>
                                 <div className='text-2xl'>{item.name}</div>
                                 <div className='line-through text-sm pt-2 text-gray-400'>฿{item.cost}</div>
                                 <div className='flex flex-row justify-between'>
-                                    <div className='text-2xl text-[#00BF7A]'>฿{item.cost - item.discount}</div>
+                                    <div className='text-2xl text-[#00BF7A]'>฿{item.cost - (item.cost * item.discount) / 100}</div>
                                     <div className=''>ขายแล้ว {item.sold} ชิ้น</div>
                                 </div>
                             </div>
