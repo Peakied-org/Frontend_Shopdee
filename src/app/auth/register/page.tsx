@@ -4,23 +4,47 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import register from "@/lib/userRegister";
 
-export default async function Register() {
+type Errors = {
+    username?: string;
+    password?: string;
+    telephone?: string;
+    address?: string;
+    cardNumber?: string;
+};
+
+export default function Register() {
     const [isSeller, setIsSeller] = useState(false);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [telephone, setTelephone] = useState("");
     const [address, setAddress] = useState("");
     const [cardNumber, setCardNumber] = useState("");
+    const [errors, setErrors] = useState<Errors>({});
     const router = useRouter();
 
+    const validateForm = () => {
+        const newErrors: Errors = {};
+        if (!username) newErrors.username = "*Username is required";
+        if (!password) newErrors.password = "*Password is required";
+        if (!telephone) newErrors.telephone = "*Telephone is required";
+        if (!address) newErrors.address = "*Address is required";
+        if (isSeller && !cardNumber) newErrors.cardNumber = "*ID Card Number is required for sellers";
+        return newErrors;
+    };
 
     const handleRegister = async (event: any) => {
         event.preventDefault();
+        const newErrors = validateForm();
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
+            return;
+        }
+
         try {
             await register(username, telephone, address, password, isSeller ? cardNumber : null);
             router.push('/');
         } catch (error) {
-            alert('error!')
+            alert('Failed to register!, Username might be unavailable');
             console.error("Failed to register:", error);
         }
     };
@@ -47,10 +71,19 @@ export default async function Register() {
                         </div>
                         <form className="flex flex-col space-y-4 mt-8 items-center" onSubmit={handleRegister}>
                             <input className="border-2 border-gray-300 p-2 w-[90%]" type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
+                            {errors.username && <p className="text-red-500 text-xs">{errors.username}</p>}
                             <input className="border-2 border-gray-300 p-2 w-[90%]" type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                            {errors.password && <p className="text-red-500 text-xs">{errors.password}</p>}
                             <input className="border-2 border-gray-300 p-2 w-[90%]" type="tel" placeholder="Telephone" value={telephone} onChange={(e) => setTelephone(e.target.value)} />
-                            {isSeller && <input className="border-2 border-gray-300 p-2 w-[90%]" type="text" placeholder="ID Card Number" value={cardNumber} onChange={(e) => setCardNumber(e.target.value)} />}
+                            {errors.telephone && <p className="text-red-500 text-xs">{errors.telephone}</p>}
                             <textarea className="border-2 border-gray-300 p-2 w-[90%]" placeholder="Address" value={address} onChange={(e) => setAddress(e.target.value)}></textarea>
+                            {errors.address && <p className="text-red-500 text-xs">{errors.address}</p>}
+                            {isSeller && (
+                                <>
+                                    <input className="border-2 border-gray-300 p-2 w-[90%]" type="text" placeholder="ID Card Number" value={cardNumber} onChange={(e) => setCardNumber(e.target.value)} />
+                                    {errors.cardNumber && <p className="text-red-500 text-xs">{errors.cardNumber}</p>}
+                                </>
+                            )}
                             <button className="bg-custom-green text-white p-2 text-xl uppercase w-[30%]" type="submit">register</button>
                         </form>
                         <p className="mt-4 text-center text-zinc-400 text-lg">
