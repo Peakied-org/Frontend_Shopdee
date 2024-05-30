@@ -6,7 +6,8 @@ import { incrementQuantity, decrementQuantity, removeItem, clearCart } from '@/r
 import { fetchCoupons } from "@/redux/features/couponSlice";
 import convertImgUrl from "../ControlSystem/convertImgUrl";
 import Image from 'next/image';
-import manageCart from '@/lib/addCart';
+import addCart from '@/lib/addCart';
+import editCart from '@/lib/editCart';
 import addOrder from '@/lib/addOrder';
 import { useSession } from 'next-auth/react';
 
@@ -58,13 +59,19 @@ export default function CartItems() {
             const token = session.user.body.token;
 
             try {
-                // Call manageCart for all items in the cart
-                await Promise.all(items.map(item => manageCart(item.id, token, item.type, item.quantity)));
-                // Call addOrder
+                // Promise.all(items.map(item => console.log(item.id, item.type, item.quantity)))
+                for (const item of items) {
+                    const cartDetails = await addCart(item.id, token, item.type);
+                    const matchingCartDetail = cartDetails.find((cartDetail: { itemID: number }) => cartDetail.itemID === item.id);
+
+                    if (!matchingCartDetail) {
+                        throw new Error("No matching cart detail found");
+                    }
+
+                    await editCart(matchingCartDetail.id, token, item.quantity);
+                }
                 await addOrder(token);
-                // Clear the Redux cart
                 dispatch(clearCart());
-                // Navigate to the payment page
                 router.push(`/payment?price=${totalPrice}`);
             } catch (error) {
                 console.error('Error processing order:', error);
