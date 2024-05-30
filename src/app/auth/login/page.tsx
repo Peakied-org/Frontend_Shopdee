@@ -6,13 +6,32 @@ import { signIn } from "next-auth/react";
 import convertImgUrl from "@/components/ControlSystem/convertImgUrl";
 import Image from "next/image";
 
+type Errors = {
+    username?: string;
+    password?: string;
+};
+
 export default function Login() {
     const [username, setUsername] = useState("");
     const [pass, setPassword] = useState("");
+    const [errors, setErrors] = useState<Errors>({});
     const router = useRouter();
+
+    const validateForm = () => {
+        const newErrors: Errors = {};
+        if (!username) newErrors.username = "*Username is required";
+        if (!pass) newErrors.password = "*Password is required";
+        return newErrors;
+    };
 
     const handleLogin = async (event:any) => {
         event.preventDefault();
+        const newErrors = validateForm();
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
+            return;
+        }
+
         try {
             await signIn("credentials", {
                 name: username,
@@ -22,7 +41,7 @@ export default function Login() {
             });
             router.push('/');
         } catch (error) {
-            alert('error!')
+            alert('username or password is incorrect!')
             console.error("Failed to login:", error);
         }
     };
@@ -48,7 +67,9 @@ export default function Login() {
                         <p className="font-mono text-emerald-500 ml-4 text-3xl font-bold uppercase">login</p>
                         <form className="flex flex-col space-y-4 mt-8 items-center" onSubmit={handleLogin}>
                             <input className="border-2 border-gray-300 p-2 w-[90%]" type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
+                            {errors.username && <p className="text-red-500 text-xs">{errors.username}</p>}
                             <input className="border-2 border-gray-300 p-2 w-[90%]" type="password" placeholder="Password" value={pass} onChange={(e) => setPassword(e.target.value)} />
+                            {errors.password && <p className="text-red-500 text-xs">{errors.password}</p>}
                             <button className="bg-custom-green text-white p-2 text-xl uppercase w-[30%]" type="submit">login</button>
                         </form>
                         <p className="mt-4 text-center text-zinc-400 text-lg">
