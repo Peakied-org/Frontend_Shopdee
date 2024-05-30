@@ -9,7 +9,7 @@ export default function Category(){
         <div>
             {/* Topic */}
             <div className="my-5 mx-5 px-2 bg-white max-h-fit">
-                <div className="text-xl py-3 pl-5">Category</div>
+                <div className="text-3xl py-4 pl-5">Category</div>
             </div>
 
             {/* Category Row */}
