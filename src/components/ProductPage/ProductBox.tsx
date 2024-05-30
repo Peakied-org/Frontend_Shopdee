@@ -64,6 +64,7 @@ export default function ProductBox({ pid }: { pid: number }) {
 
   const handleAddToCart = () => {
     if (product) {
+      //console.log(count)
       dispatch(addToCart({
         id: product.id,
         name: product.name,

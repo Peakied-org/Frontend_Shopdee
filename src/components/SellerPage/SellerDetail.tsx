@@ -26,7 +26,7 @@ export default function SellerPage({ sid }: { sid: number }) {
             {store && (
                 <>
                     <div className="py-10 pl-7 text-4xl font-semibold">{store.name}</div>
-                    <Image src={convertImgUrl(store.banner)} width={100} height={100} className="px-20 w-auto h-auto" alt="Store Banner"/>
+                    <Image src={convertImgUrl(store.banner)} width={700} height={700} className="px-20 w-auto h-auto" alt="Store Banner"/>
                     <div className="pt-10 pl-7 text-3xl font-semibold">Description</div>
                     <div className="py-7 pl-12 text-xl ">{store.detail}</div>
                 </>
