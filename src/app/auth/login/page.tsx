@@ -32,18 +32,18 @@ export default function Login() {
             return;
         }
 
-        try {
-            await signIn("credentials", {
-                name: username,
-                password: pass,
-                redirect: true,
-                callbackUrl: "/",
-            });
+        const result = await signIn('credentials', {
+            name: username,
+            password: pass,
+            redirect: false,
+          });
+      
+          if (result && result.error) {
+            alert('Username or password is incorrect!');
+            console.error('Failed to login:', result.error);
+          } else if (result && !result.error) {
             router.push('/');
-        } catch (error) {
-            alert('username or password is incorrect!')
-            console.error("Failed to login:", error);
-        }
+          }
     };
 
     return (

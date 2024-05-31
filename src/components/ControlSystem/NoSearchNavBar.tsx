@@ -21,32 +21,35 @@ export default function TopMenu() {
         dispatch(fetchStores());
     }, [dispatch]);
     
-    if(session){
     useEffect(() => {
-        const fetchData = async () => {
-          const profile = await getUserProfile(session.user.body.token);
-          if (profile) {
-            setUser(profile);
-          }
-        };
-        fetchData();
-        }, []);
-
-        useEffect(() => {
-            const fetchProductAndStores = async () => {
-                try {
-                    if (!sloading && stores.length > 0) {
-                      const matchedStore = stores.find((store: { userID: number }) => store.userID === user?.body.id);
-                      setStore(matchedStore || null);
-                    }
-                } catch (error) {
-                    console.error('Error fetching product or stores:', error);
-                }
-            };
-      
-            fetchProductAndStores();
-        }, [sloading, stores]);
-    }
+        if (session) {
+          const fetchData = async () => {
+            try {
+              const profile = await getUserProfile(session.user.body.token);
+              if (profile) {
+                setUser(profile);
+              }
+            } catch (error) {
+              console.error('Failed to fetch profile:', error);
+            }
+          };
+          fetchData();
+        }
+      }, [session]);
+    
+      useEffect(() => {
+        if (!sloading && stores.length > 0) {
+          const fetchProductAndStores = async () => {
+            try {
+              const matchedStore = stores.find((store: { userID: number }) => store.userID === user?.body.id);
+              setStore(matchedStore || null);
+            } catch (error) {
+              console.error('Error fetching product or stores:', error);
+            }
+          };
+          fetchProductAndStores();
+        }
+      }, [sloading, stores, user]);
 
     return (
         <div className="fixed top-0 left-0 right-0 bg-custom-green h-24 z-30 flex gap-5 flex-row-reverse">
