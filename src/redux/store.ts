@@ -6,18 +6,28 @@ import storeReducer from "./features/storeSlice";
 import orderReducer from "./features/orderSlice";
 import { TypedUseSelectorHook, useSelector, useDispatch } from "react-redux";
 
-export const store = configureStore({
+export const configureAppStore = () => {
+  const store = configureStore({
     reducer: {
-        cart: cartReducer,
-        coupons: couponReducer,
-        items: itemReducer,
-        stores: storeReducer,
-        orders: orderReducer,
-    }
-});
-store.subscribe(() => {
-    localStorage.setItem('cart', JSON.stringify(store.getState().cart));
+      cart: cartReducer,
+      coupons: couponReducer,
+      items: itemReducer,
+      stores: storeReducer,
+      orders: orderReducer,
+    },
   });
+
+  // Check if window is defined (client-side) before subscribing to store changes
+  if (typeof window !== 'undefined') {
+    store.subscribe(() => {
+      localStorage.setItem('cart', JSON.stringify(store.getState().cart));
+    });
+  }
+
+  return store;
+};
+
+export const store = configureAppStore();
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

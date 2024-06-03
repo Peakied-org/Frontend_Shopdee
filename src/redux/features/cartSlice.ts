@@ -16,6 +16,9 @@ interface CartState {
 
 // Attempt to load the cart state from localStorage
 const loadState = () => {
+  if (typeof window === 'undefined') {
+    return undefined; // Return undefined during SSR
+  }
   try {
     const serializedState = localStorage.getItem('cart');
     if (serializedState === null) {
@@ -63,7 +66,6 @@ const cartSlice = createSlice({
     },
   },
 });
-
 
 export const { addToCart, incrementQuantity, decrementQuantity, removeItem, clearCart } = cartSlice.actions;
 export default cartSlice.reducer;

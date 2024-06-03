@@ -1,4 +1,3 @@
-// itemSlice.ts
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import getItems from '@/lib/getItems';
 import { Product } from '@/interfaces';
