@@ -16,7 +16,7 @@ export default function Category(){
             <div className="mx-5 px-2 bg-white max-h-fit">
                 <div className="grid grid-cols-10 gap-4 p-5">
                 {category.map((item) => (
-                    <Link key={item.id} href={`/sorted?query=${item.name}`} passHref>
+                    <Link key={item.id} href={`/category/${item.id}`} passHref>
                         <div className="text-center">
                             <Image src={convertImgUrl(item.picture)} alt={item.name} width={150} height={150} />
                             <div className="text-xs py-2">{item.name}</div>
