@@ -35,7 +35,7 @@ export default function OrderList() {
             {orders.map(order => (
                 <div key={order.id} className="bg-white p-6 mb-4 shadow-md w-[70%] justify-between">
                     {order.orderDetails.map(item => (
-                        <div key={item.id} className="grid grid-cols-3 gap-4 items-center border-b py-2">
+                        <div key={item.id} className="grid grid-cols-4 gap-4 items-center border-b py-2">
                             {/* Image */}
                             <div className="flex justify-center">
                                 <Image src={convertImgUrl(item.image)} alt={item.name} height={1000} width={1000} className="w-24 h-24 object-cover" />
@@ -47,14 +47,20 @@ export default function OrderList() {
                             {/* Price */}
                             <div className="text-2xl text-green-600 font-semibold">
                                 {item.cost * item.quantity} ฿
-                            </div>                            
+                            </div>
+                            <div className={`text-xl ${
+                                item.status === 'ORDER' ? 'text-red-500'
+                                : item.status === 'SHIPPING' ? 'text-yellow-500'
+                                : item.status === 'RECIVE' ? 'text-green-500'
+                                : ''}`}>
+                                {item.status}
+                            </div>                           
                         </div>
                         
                     ))}
-                    <div className="grid grid-cols-3 gap-4 items-center py-2 mt-2 font-semibold">
-                        <div className="col-span-1 text-3xl text-center">Total Cost</div>
-                        <div className="col-span-1"></div>
-                        <div className="col-span-1 text-3xl text-green-600">
+                    <div className="grid grid-cols-4 gap-4 items-center py-2 mt-2 font-semibold">
+                        <div className="col-span-2 text-3xl text-center">Total Cost</div>
+                        <div className="col-span-2 text-3xl text-green-600 text-center">
                             {order.totalCost} ฿
                         </div>
                     </div>

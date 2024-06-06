@@ -60,8 +60,8 @@ export default function TopMenu() {
     };
 
     return (
-        <div className="fixed top-0 left-0 right-0 bg-custom-green h-24 z-30 flex gap-5 flex-row-reverse">
-            <div className='flex flex-row absolute left-10 h-full items-center'>
+        <div className="fixed top-0 left-0 right-0 bg-custom-green h-24 z-30 flex justify-between w-full">
+            <div className='flex flex-row items-center h-full space-x-16 pl-10'>
                 <Link href="/" className='pr-16'>
                     <Image src='/img/weblogo.png' alt='logo' style={{ height: '100%', width: 'auto' }}
                         width={0} height={0} sizes='100vh' />
@@ -78,7 +78,7 @@ export default function TopMenu() {
                 </div>
             </div>
 
-            <div className='flex flex-row absolute items-center right-10 h-full space-x-16'>
+            <div className='flex flex-row items-center h-full space-x-16 pr-10'>
                 {
                     user? 
                         user.body.role === "SELLER" ? store?

@@ -16,18 +16,18 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const session = await getServerSession(authOptions)
+  const session = await getServerSession(authOptions);
   return (
     <html lang="en">
       <body className={`${inter.className} flex flex-col min-h-screen text-black`}>
         <ReduxProvider>
-        <NextAuthProvider session={session}>
-        <TopMenu/>
-        <main className="container mx-auto mt-[navbarHeight]">
-            {children}
-        </main>
-        <Footer/>
-        </NextAuthProvider>
+          <NextAuthProvider session={session}>
+            <TopMenu />
+            <main className="container flex-grow mx-auto mt-[navbarHeight]">
+              {children}
+            </main>
+            <Footer/>
+          </NextAuthProvider>
         </ReduxProvider>
       </body>
     </html>
