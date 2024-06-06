@@ -19,7 +19,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const session = await getServerSession(authOptions)
   return (
     <html lang="en">
-      <body className={`${inter.className} flex flex-col min-h-screen`}>
+      <body className={`${inter.className} flex flex-col min-h-screen text-black`}>
         <ReduxProvider>
         <NextAuthProvider session={session}>
         <TopMenu/>

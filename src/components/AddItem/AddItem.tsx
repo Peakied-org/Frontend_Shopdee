@@ -35,8 +35,15 @@ export default function AddItem({ sid }: { sid: number }) {
 
     const handleSubmit = async () => {
         try {
+            const defaultImage = "https://drive.google.com/file/d/1zWDVmR9SKCw7BcgvOFTuLqKRGSArWATC/view?usp=drive_link";
+            const finalImages = images.map(img => img ? img : defaultImage);
+            if(finalImages.length < 4){
+                while(finalImages.length<4){
+                    finalImages.push(defaultImage)
+                }
+            }
             if(session){
-                const response = await addItem(sid, session.user.body.token, name, cost, selected, detail, stock, sold, discount, opt, images);
+                const response = await addItem(sid, session.user.body.token, name, cost, selected, detail, stock, sold, discount, opt, finalImages);
                 alert('Item added successfully:');
             } 
         } catch (error) {

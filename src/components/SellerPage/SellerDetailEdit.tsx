@@ -63,6 +63,9 @@ export default function SellerDetailEdit() {
     const handleSave = async () => {
         if (session && store) {
             try {
+                const defaultImage = "https://drive.google.com/file/d/1YkJ-nIA5WQbgTbIEk2SRJ7QPepSfW9UP/view?usp=drive_link";
+                if(profileImage === ""){setProfileImage(defaultImage)}
+                if(bannerImage === ""){setBannerImage(defaultImage)}
                 await editStore(store?.id,session.user.body.token, shopName, description, profileImage, bannerImage);
                 alert('Store updated successfully!');
             } catch (error) {

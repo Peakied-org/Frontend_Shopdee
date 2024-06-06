@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import convertImgUrl from "@/components/ControlSystem/convertImgUrl";
 import Image from "next/image";
+import { useAppDispatch } from '@/redux/store';
+import { clearCart } from '@/redux/features/cartSlice';
 
 type Errors = {
     username?: string;
@@ -16,6 +18,7 @@ export default function Login() {
     const [pass, setPassword] = useState("");
     const [errors, setErrors] = useState<Errors>({});
     const router = useRouter();
+    const dispatch = useAppDispatch();
 
     const validateForm = () => {
         const newErrors: Errors = {};
@@ -42,6 +45,7 @@ export default function Login() {
             alert('Username or password is incorrect!');
             console.error('Failed to login:', result.error);
           } else if (result && !result.error) {
+            dispatch(clearCart())
             router.push('/');
           }
     };
