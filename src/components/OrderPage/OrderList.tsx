@@ -47,8 +47,9 @@ export default function OrderList() {
                             {/* Price */}
                             <div className="text-2xl text-green-600 font-semibold">
                                 {item.cost * item.quantity} ฿
-                            </div>
+                            </div>                            
                         </div>
+                        
                     ))}
                     <div className="grid grid-cols-3 gap-4 items-center py-2 mt-2 font-semibold">
                         <div className="col-span-1 text-3xl text-center">Total Cost</div>

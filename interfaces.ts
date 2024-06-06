@@ -49,12 +49,25 @@ type Coupon = {
     image: string
 };
 
-type Order = {
-    orderId: number;
-    items: CartDetail[];
-    totalPrice: number;
-    orderDate: string;
+type OrderDetail = {
+    id: number;
+    name: string;
+    orderID: number;
+    storeID: number;
+    itemID: number;
+    quantity: number;
+    cost: number;
+    image: string;
     status: string;
+    type: string;
+}
+
+type Order = {
+    id: number;
+    userID: number;
+    orderDate: string;
+    totalCost: number;
+    orderDetails: OrderDetail[];
 }
 
 type User = {
