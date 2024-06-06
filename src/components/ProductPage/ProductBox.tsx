@@ -50,7 +50,7 @@ export default function ProductBox({ pid }: { pid: number }) {
     if (count > 1) {
       setCount(count - 1);
     } else {
-      toast.error("Item can't be less than 1");
+      toast.error("Item can't be less than 1",{position:"bottom-right"});
     }
   };
 
@@ -58,7 +58,7 @@ export default function ProductBox({ pid }: { pid: number }) {
     if (product && count < product.stock) {
       setCount(count + 1);
     } else {
-      toast.error("Item can't be more than stock");
+      toast.error("Item can't be more than stock",{position:"bottom-right"});
     }
   };
 
@@ -74,7 +74,7 @@ export default function ProductBox({ pid }: { pid: number }) {
         picture: product.images[0],
         type: product.types[activeChoice]
       }));
-      toast.success("Item added to cart");
+      toast.success("Item added to cart",{position:"bottom-right"});
     }
   };
 

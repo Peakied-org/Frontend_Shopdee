@@ -34,7 +34,7 @@ export default function Register() {
         return newErrors;
     };
 
-    const handleRegister = async (event:any) => {
+    const handleRegister = async (event: any) => {
         event.preventDefault();
         const newErrors = validateForm();
         if (Object.keys(newErrors).length > 0) {
@@ -43,7 +43,11 @@ export default function Register() {
         }
         try {
             await register(username, telephone, address, password, isSeller ? cardNumber : null);
-            router.push('/');
+            if (isSeller) {
+                router.push('/storeAdd');
+            } else {
+                router.push('/');
+            }
         } catch (error) {
             alert('Failed to register!, Username might be unavailable');
             console.error("Failed to register:", error);
