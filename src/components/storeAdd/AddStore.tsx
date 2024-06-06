@@ -1,8 +1,8 @@
-'use client'
+'use client';
 import { useState } from 'react';
 import addStore from '@/lib/addStore';
 import { useSession } from "next-auth/react";
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 export default function AddStore() {
     const { data: session } = useSession();
