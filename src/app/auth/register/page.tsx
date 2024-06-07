@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import register from "@/lib/userRegister";
 import convertImgUrl from "@/components/ControlSystem/convertImgUrl";
 import Image from "next/image";
+import { signIn } from "next-auth/react";
 
 type Errors = {
     username?: string;
@@ -43,6 +44,12 @@ export default function Register() {
         }
         try {
             await register(username, telephone, address, password, isSeller ? cardNumber : null);
+            await signIn('credentials', {
+                name: username,
+                password: password,
+                redirect: false,
+            });
+            
             if (isSeller) {
                 router.push('/storeAdd');
             } else {

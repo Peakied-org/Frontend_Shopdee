@@ -16,9 +16,11 @@ export default function StoreAdd() {
             const fetchData = async () => {
                 try {
                     const profile = await getUserProfile(session.user.body.token);
+                    //console.log(profile)
                     if (profile) {
                         setUserRole(profile.body.role);
-                        const store = await getMyStore();
+                        const store = await getMyStore(session.user.body.token);
+                        console.log(store)
                         setHasStore(store !== null);
                     }
                 } catch (error) {
